@@ -1,0 +1,13 @@
+@import "styles/config";
+
+.container_item {
+  @include grid-item();
+  // margin-bottom: scale-to-em(100);
+}
+
+.action_buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}

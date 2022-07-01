@@ -1,0 +1,55 @@
+@import "styles/config";
+
+.form {
+  @include grid-item();
+}
+
+.form_inner {
+  @include grid-item(7, 1);
+
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin-bottom: scale-to-em(48);
+  border-radius: scale-to-em(8);
+  padding: scale-to-em(40) scale-to-em(48);
+  position: relative;
+
+  @media (max-width: $max-desktop) {
+    @include grid-item(7, 0);
+    // grid-row: 2;
+  }
+
+  @media (max-width: $max-tablet) {
+    @include grid-item();
+    grid-row: 2;
+  }
+
+  @media (max-width: $max-mobile) {
+    padding: scale-to-em(20) scale-to-em(24);
+  }
+
+  input,
+  select {
+    @media (min-width: $max-mobile) {
+      max-width: 23em;
+    }
+  }
+}
+
+.array_title {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.trash_btn {
+  height: 40px;
+  width: 40px;
+  &:hover {
+    svg,
+    path {
+      fill: red !important;
+    }
+  }
+}
