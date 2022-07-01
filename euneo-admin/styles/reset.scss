@@ -1,0 +1,260 @@
+// global reset file
+
+html,
+body,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+figure,
+footer,
+header,
+menu,
+nav,
+section,
+time,
+mark,
+audio,
+video,
+details,
+summary {
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+    font-weight: inherit;
+    font-size: inherit;
+    vertical-align: baseline;
+}
+
+@-ms-viewport {
+    width: device-width;
+}
+
+@-o-viewport {
+    width: device-width;
+}
+
+@viewport {
+    width: device-width;
+}
+
+html {
+    box-sizing: border-box;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    -webkit-overflow-scrolling: touch;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+    min-height: 100vh;
+}
+
+body {
+    text-size-adjust: 100%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+a {
+    color: inherit;
+}
+
+img,
+object,
+iframe,
+embed,
+video {
+    display: block;
+
+    max-width: 100%;
+    height: auto;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+li {
+    list-style: inherit;
+}
+
+address,
+cite,
+em,
+i {
+    font-style: inherit;
+}
+
+blockquote,
+q {
+    quotes: none;
+
+    &::before,
+    &::after {
+        content: '';
+        content: none;
+    }
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title],
+dfn[title] {
+    border-bottom: 1px dotted currentColor;
+
+    cursor: help;
+}
+
+/* tables still need cellspacing="0" in the markup */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th {
+    font-weight: 700;
+    vertical-align: bottom;
+}
+
+hr {
+    display: block;
+
+    margin: 1em 0;
+    padding: 0;
+
+    height: 1px;
+
+    border: 0;
+    border-top: 1px solid currentColor;
+}
+
+pre {
+    white-space: pre; /* CSS 3 (and 2.1 as well, actually) */
+}
+
+input,
+select {
+    vertical-align: middle;
+}
+
+strong,
+b {
+    font-weight: inherit;
+}
+
+/* Make sure sup and sub don't mess with your line-heights http://gist.github.com/413930 */
+sub,
+sup {
+    position: relative;
+
+    line-height: 0;
+}
+sup {
+    top: -0.5em;
+}
+sub {
+    bottom: -0.25em;
+}
+
+/* standardize any monospaced elements */
+pre,
+code,
+kbd,
+samp {
+    font-family: monospace, sans-serif;
+}
+
+label,
+input[type='button'],
+input[type='submit'],
+input[type='file'],
+button {
+    cursor: pointer;
+}
+
+button,
+input,
+select,
+textarea {
+    margin: 0;
+
+    border-radius: 0;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+
+    color: inherit;
+    background: transparent;
+}
+
+button,
+input[type='button'] {
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+    color: inherit;
+}

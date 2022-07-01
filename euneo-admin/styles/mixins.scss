@@ -1,0 +1,201 @@
+// return unitless value
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+        @return math.div($number, ($number * 0 + 1));
+    }
+
+    @return $number;
+}
+
+// scale block according to specified font size.
+// $size is pixel value of desired width, optional font-size
+// would rather we "show working" rather than use mixins, but
+// using mixin at least prevents having to @use math module
+@function scale-to-em($size, $scale-font-size: $font-size) {
+    @return math.div(strip-unit($size), strip-unit($scale-font-size)) * 1em;
+}
+
+// GENERIC css fit to relative parent
+@mixin fit($position: absolute) {
+    position: $position;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+// Animate mixin
+@mixin animate($animation, $duration, $method, $times) {
+    animation: $animation $duration $method $times;
+}
+
+// Keyframes mixin
+@mixin keyframes($name) {
+    @keyframes #{$name} {
+        @content;
+    }
+}
+
+// util for hiding
+@mixin visually-hidden {
+    position: absolute;
+
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+
+    white-space: nowrap;
+}
+
+// <Container>: center & left/right pad elements
+@mixin container($fluid: false) {
+    flex-grow: 1;
+
+    margin: 0 auto;
+    padding-left: $container-gutter-mobile;
+    padding-right: $container-gutter-mobile;
+
+    width: 100%;
+
+    @if $fluid == false {
+        max-width: $page-width + $container-gutter-mobile * 2;
+    }
+
+    @supports (--css: variables) {
+        padding-left: var(--container-gutter);
+        padding-right: var(--container-gutter);
+
+        @if $fluid == false {
+            max-width: calc(#{$page-width} + var(--container-gutter) * 2);
+        }
+    }
+}
+
+// <Section>: full-width; top & bottom padding for a section component. usually direct parent of <Container />
+@mixin section(
+    $padding-top: $section-padding,
+    $padding-bottom: $section-padding,
+    $padding-top-mobile: $section-padding-mobile,
+    $padding-bottom-mobile: $section-padding-mobile
+) {
+    // Set up unitless values
+    $top-mobile: strip-unit($padding-top-mobile);
+    $bottom-mobile: strip-unit($padding-bottom-mobile);
+    $top: strip-unit($padding-top);
+    $bottom: strip-unit($padding-bottom);
+
+    flex: none;
+
+    padding-top: $top-mobile * 1px;
+    padding-bottom: $bottom-mobile * 1px;
+
+    width: 100%;
+
+    // todo: clamp() should fallback to max(min, max) & then percentage between tablet & limit;
+
+    @supports (padding: clamp(1px, 1%, 2px)) {
+        padding-top: clamp(
+            #{$top-mobile * 1px},
+            #{percentage(math.div(($top * 1px), $page-width))},
+            #{$top * 1px}
+        );
+        padding-bottom: clamp(
+            #{$bottom-mobile * 1px},
+            #{percentage(math.div(($bottom * 1px), $page-width))},
+            #{$bottom * 1px}
+        );
+    }
+
+    @supports not (padding: clamp(1px, 1%, 2px)) {
+        @media (min-width: $min-desktop) {
+            padding-top: $top * 1px;
+            padding-bottom: $bottom * 1px;
+        }
+    }
+
+    &:empty {
+        display: none;
+    }
+}
+
+// BUTTON styles. used in input[type="button"] and the <Button /> component
+@mixin button {
+    @if variable-exists(font-size-button-min) and
+        variable-exists(font-size-button)
+    {
+        @include responsive-font($font-size-button-min, $font-size-button);
+    }
+
+    @media (max-width: $max-mobile) {
+        @include responsive-font(16px, 16px);
+    }
+
+    &.disabled,
+    &:disabled {
+        cursor: default;
+        pointer-events: none;
+
+        opacity: 0.5;
+    }
+}
+
+// generic text-type input styles
+@mixin input-defaults {
+    @if variable-exists(font-size-input-min) and
+        variable-exists(font-size-input)
+    {
+        @include responsive-font($font-size-input-min, $font-size-input);
+    }
+    display: block;
+
+    padding-left: 2ch;
+    padding-right: 2ch;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    border-radius: 6px;
+    border: scale-to-em(1.5px) solid var(--color-border);
+    background-color: rgba(244, 244, 244, 0.4);
+    min-height: 60px;
+    width: 100%;
+    color: $dark-gray;
+
+    &:focus {
+        outline: none;
+
+        border: scale-to-em(1.5px) solid rgb(192, 190, 186);
+    }
+
+    @if variable-exists(input-height) {
+        display: inline-flex;
+        align-items: center;
+
+        height: $input-height;
+    }
+
+    &:disabled {
+        color: var(--color-disabled, rgba($color-font, 0.6));
+    }
+}
+
+// save having to @use scss math module per css module
+@mixin aspect-ratio($width, $height) {
+    display: block;
+
+    padding-bottom: math.div($height, $width) * 100%;
+}
+
+@mixin common-grid-item {
+    @include grid-item(10, 1);
+
+    @media (max-width: $max-desktop) {
+        @include grid-item();
+    }
+    @media (max-width: $max-tablet) {
+    }
+    @media (max-width: $max-mobile) {
+    }
+}

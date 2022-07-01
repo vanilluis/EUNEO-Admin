@@ -1,0 +1,147 @@
+@import 'styles/config';
+
+.select {
+    --height: 50px;
+    width: 100%;
+
+    [class$='-control'] {
+        background-color: $white;
+        width: 146px;
+        height: var(--height);
+        border-radius: 6px;
+        border: scale-to-em(1.5px) solid var(--color-border);
+        box-shadow: none;
+
+        &:hover,
+        &:active {
+            border-color: var(--color-border);
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:focus {
+            border-color: red;
+            background-color: purple;
+        }
+        span {
+            display: none;
+            height: 32px;
+            align-self: center;
+        }
+
+        * {
+            height: var(--height);
+        }
+    }
+
+    [class$='-placeholder'],
+    [class$='-singleValue'] {
+        height: auto;
+        color: $dark-gray;
+        font-weight: 500;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    [class$='-Input'] {
+        height: 100%;
+        margin: 0px;
+        padding-top: 1px;
+
+        div,
+        input {
+            display: flex !important;
+            align-items: center;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 1px;
+
+            color: $dark-gray;
+
+            height: 100%;
+            margin: 0px;
+            min-height: 0px;
+        }
+
+        input {
+            padding: 0px 2px !important;
+        }
+    }
+
+    [class$='-ValueContainer'] {
+        height: 100%;
+        margin: 0px;
+    }
+
+    [class$='-IndicatorContainer'],
+    [class$='-indicatorContainer'] {
+        color: $dark-gray;
+
+        &:hover {
+            color: $dark-gray;
+        }
+    }
+
+    [class$='-indicatorContainer'] {
+        width: 32px;
+        height: 32px;
+        svg {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    // [class$='-IndicatorsContainer'] {
+    // margin-right: scale-to-em(5);
+    // }
+
+    [class$='-ValueContainer'] {
+        padding-left: scale-to-em(10);
+        padding-right: scale-to-em(10a);
+    }
+
+    [class$='-menu'] {
+        margin: auto;
+        min-width: 146px;
+        border-radius: 6px;
+        overflow: hidden;
+
+        [class$='-MenuList'] {
+        }
+
+        .option {
+            height: 45px;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            color: $dark-gray;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 1px;
+
+            &__is_focused {
+                background-color: $light-gray;
+            }
+            &__is_selected {
+                background-color: $soft-green;
+            }
+        }
+    }
+}
+
+.year {
+    [class$='-ValueContainer'] {
+        width: 110px;
+        flex: none;
+    }
+
+    [class$='-control'] {
+        justify-content: flex-start;
+    }
+
+    [class$='-menu'] {
+        width: 100%;
+    }
+}

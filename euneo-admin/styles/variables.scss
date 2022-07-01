@@ -1,0 +1,151 @@
+// PROJECT SCSS VARIABLES
+
+// not all of these are available as css custom properties by default: they can be added @ styles/global.scss
+
+// GRID: defaults to 12 columsn with 30px gap as $gutter;
+
+// grid-gap
+$gutter: 30px;
+
+// grid columns
+$grid-column-count: 12;
+
+// <Container> - spacing either side of content; used in @container mixin
+$container-gutter-mobile: 20px;
+$container-gutter-tablet: 50px;
+$container-gutter-desktop: 70px;
+
+// vertical spacing between <Section>s. used to compute percentage-based values via @section mixin
+$section-padding: 90px;
+$section-padding-mobile: 60px;
+
+// point at which container reaches width limit (unless fluid=true), and responsive font-sizes max-out
+$page-width: 1312px;
+
+// mq for page full-width
+$page-limit: $page-width + ($container-gutter-desktop * 2);
+
+// COMMON BREAKPOINTS: used for consistent measuring breakpoints
+// also used in <Grid /> component breakpoints
+$min-mobile: 480px;
+$min-tablet: 720px;
+$min-desktop: 1080px;
+$min-desktopL: 1440px;
+
+$max-mobile: $min-mobile - 1px;
+$max-tablet: $min-tablet - 1px;
+$max-desktop: $min-desktop - 1px;
+$max-desktopL: $min-desktopL - 1px;
+
+// MISC ELEMENT DIMENSIONS
+$header-height: 90px;
+$header-height-mobile: 60px;
+
+// Global STACK of elements
+$zindex-header: 2;
+
+// COLORS - these are also generated as :root css variables in global.scss
+
+// theme
+$dark-amber: #994433;
+$soft-navy: #2b4c6a;
+$light-rose: #ffd6d6;
+$soft-green: #c2d6d6;
+$light-gray: #f4f4f4;
+$medium-gray: #666666;
+$dark-gray: #373b43;
+$pale-rose: #eeebe7;
+$white: white;
+$black: black;
+
+$color-primary: $dark-amber;
+$color-secondary: $soft-navy;
+$color-error: #cc0000;
+// misc inlcuding dark mode
+$color-background: #f4f4f4;
+$color-border: #eeebe7;
+$color-font: $medium-gray;
+$color-link: $color-font;
+$color-placeholder: $medium-gray;
+
+// Dark mode
+$color-background-dark-mode: #000;
+$color-font-dark-mode: #ddd;
+$color-link-dark-mode: $color-font-dark-mode;
+
+// TYPE (default is a locally-hosted set up)
+$font-family-serif: 'GT Super Display';
+$font-family-sans: 'Silka';
+$font-family-monospace: monospace, sans-serif;
+
+$font-family: $font-family-sans;
+$font-family-heading: $font-family-serif;
+
+// font-sizes
+$font-size: 16px;
+$font-size-min: 16px;
+
+$font-size-button: 13px;
+$font-size-button-min: 12px;
+
+$font-size-input: 16px;
+$font-size-input-min: 14px;
+
+$p-18-size: 18px;
+$p-18-size-min: 18px;
+
+// used in heading mixins (styles/type)
+$h1-size: 52px;
+$h1-size-min: 32px;
+
+$h2-size: 40px;
+$h2-size-min: 32px;
+
+$h3-size: 32px;
+$h3-size-min: 28px;
+
+$h4-size: 26px;
+$h4-size-min: 26px;
+
+$h5-size: 22px;
+$h5-size-min: 20px;
+
+$h6-size: 18px;
+$h6-size-min: 16px;
+
+$line-height: 1.5;
+
+// form elements
+$button-height: $font-size * 3;
+$button-width: 220px;
+$input-height: $font-size * 3;
+
+// ANIMATION [power1, 2, 3, 4] in gsap;
+
+// ease-in
+$ease-in-quad: cubic-bezier(0.11, 0, 0.5, 0);
+$ease-in-cubic: cubic-bezier(0.32, 0, 0.67, 0);
+$ease-in-quart: cubic-bezier(0.5, 0, 0.75, 0);
+$ease-in-quint: cubic-bezier(0.64, 0, 0.78, 0);
+
+// ease-out
+$ease-out-quad: cubic-bezier(0.5, 1, 0.89, 1);
+$ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+$ease-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+$ease-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+// ease-in-out
+$ease-in-out-quad: cubic-bezier(0.45, 0, 0.55, 1);
+$ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+$ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+$ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+$default-ease: $ease-in-out-cubic;
+
+$transition-duration: 300ms;
+
+// element lists (for genetic style loops)
+$input-types: date, datetime-local, email, month, number, password, search, tel,
+    text, time, url, week;
+$heading-types: h1, h2, h3, h4, h5, h6;
+$block-article-elements: p, ul, ol, dl, blockquote, pre;

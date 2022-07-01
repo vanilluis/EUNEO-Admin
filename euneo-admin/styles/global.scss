@@ -1,0 +1,190 @@
+// PROJECT-SPECIFIC global css should go here
+@import 'reset';
+@import 'fonts';
+@import 'config';
+
+// global form styles imported separately
+@import 'forms';
+
+:root {
+    // ANIMATION / TRANSITION
+    --default-ease: #{$default-ease};
+    --transition-duration: #{$transition-duration};
+
+    // COLORS
+    --color-background: #{$color-background};
+    --color-border: #{$color-border};
+    --color-font: #{$color-font};
+    --color-link: #{$color-link};
+    --color-primary: #{$color-primary};
+
+    @if variable-exists(color-placeholder) {
+        --color-placeholder: #{$color-placeholder};
+    }
+    @if variable-exists(color-secondary) {
+        --color-secondary: #{$color-secondary};
+    }
+
+    // LAYOUT
+    --container-gutter: #{$container-gutter-mobile};
+    --gutter: #{$gutter};
+
+    @if variable-exists(header-height-mobile) {
+        --header-height: #{$header-height-mobile};
+    }
+
+    @media (min-width: $min-tablet) {
+        --container-gutter: #{$container-gutter-tablet};
+    }
+
+    @media (min-width: $min-desktop) {
+        --container-gutter: #{$container-gutter-desktop};
+
+        @if variable-exists(header-height) {
+            --header-height: #{$header-height};
+        }
+    }
+
+    // DARK MODE
+    @media (prefers-color-scheme: light) {
+        // @if variable-exists(color-background-dark-mode) {
+        //     --color-background: #{$color-background-dark-mode};
+        // }
+
+        // @if variable-exists(color-font-dark-mode) {
+        //     --color-font: #{$color-font-dark-mode};
+        // }
+
+        // @if variable-exists(color-link-dark-mode) {
+        //     --color-link: #{$color-link-dark-mode};
+        // }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        --transition-duration: 1ms;
+    }
+}
+
+html {
+    @include responsive-font($font-size-min, $font-size);
+    @mixin html-overflow-hidden {
+        overflow-y: hidden;
+
+        body {
+            padding-right: var(--browser-scrollbar-width);
+            touch-action: none;
+            min-height: 100vh;
+        }
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    font-family: $font-family;
+    line-height: $line-height;
+
+    color: var(--color-font, $color-font);
+    background: var(--color-background, $color-background);
+
+    &.scroll-disabled {
+        // if nav is open
+        @include html-overflow-hidden;
+    }
+
+    &.nav-open {
+        // if nav is open
+        // @media (min-width: $min-desktop) {
+        @include html-overflow-hidden;
+        // }
+    }
+
+    --card-padding: 3em;
+    @media (max-width: $max-tablet) {
+        --card-padding: 20px;
+    }
+}
+
+body {
+    color: var(--color-font);
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+}
+
+hr {
+    border-color: var(--color-border, $color-border);
+}
+
+a,
+button {
+    @include button;
+    color: var(--color-link, inherit);
+    text-decoration: none;
+
+    @media (pointer: fine) {
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    @media (pointer: coarse) {
+        &:focus {
+            outline: none;
+        }
+        &:focus-visible {
+            outline: none;
+        }
+    }
+}
+
+img {
+    border-radius: 8px;
+    min-height: 100px;
+    min-width: 100px;
+}
+
+// TYPES
+h1 {
+    @include h1;
+}
+
+h2 {
+    @include h2;
+}
+
+h3 {
+    @include h3;
+}
+
+h4 {
+    @include h4;
+}
+
+h5 {
+    @include h5;
+}
+
+h6 {
+    @include h6;
+    margin: 14px 0px 14px 0px;
+}
+
+p {
+    margin: 14px 0px 14px 0px;
+
+    // GLOBAL HYPERLINKS
+    a {
+        font-size: inherit;
+        color: $dark-amber;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+            text-decoration-thickness: 0.08em;
+        }
+    }
+}
+
+em {
+    font-style: italic;
+}

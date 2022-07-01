@@ -1,0 +1,123 @@
+// all font/type-based mixins
+
+// RESPONSIVE FONT
+
+// mixin scale font-size according to viewport
+// basic usage: @include responsive-font($min-value, $max-value);
+// arguments are stripped of units (so you can pass in px or non-px values) but re-rendered as pixel-based values
+@mixin responsive-font(
+    $min-size: $font-size-min,
+    $max-size: $font-size,
+    $viewport-min: $min-mobile,
+    $viewport-max: $page-width
+) {
+    $min: strip-unit($min-size);
+    $max: strip-unit($max-size);
+    $v-min: strip-unit($viewport-min);
+    $v-max: strip-unit($viewport-max);
+
+    // compute fluid font size between min / max values based on viewport size
+    $f: math.div(($max - $min), ($v-max - $v-min));
+    $slope: $f * 100vw;
+    $intercept: ($min * 1px) - ($f * $viewport-min);
+    $fluid-size: calc(#{$slope} + #{$intercept});
+
+    // default
+    font-size: $min * 1px;
+
+    // should always be the case
+    @if $min < $max {
+        // clamp font-size
+        @supports (font-size: clamp(1px, 2px, 3px)) {
+            font-size: clamp(#{$min * 1px}, #{$fluid-size}, #{$max * 1px});
+        }
+
+        // if clamp not supported, use max font size at desktop
+        @supports not (font-size: clamp(1px, 2px, 3px)) {
+            @media (min-width: $min-desktop) {
+                font-size: $max * 1px;
+            }
+        }
+    }
+}
+
+@mixin responsive-font-important(
+    $min-size: $font-size-min,
+    $max-size: $font-size,
+    $viewport-min: $min-mobile,
+    $viewport-max: $page-width
+) {
+    $min: strip-unit($min-size);
+    $max: strip-unit($max-size);
+    $v-min: strip-unit($viewport-min);
+    $v-max: strip-unit($viewport-max);
+
+    // compute fluid font size between min / max values based on viewport size
+    $f: math.div(($max - $min), ($v-max - $v-min));
+    $slope: $f * 100vw;
+    $intercept: ($min * 1px) - ($f * $viewport-min);
+    $fluid-size: calc(#{$slope} + #{$intercept});
+
+    // default
+    font-size: $min * 1px;
+
+    // should always be the case
+    @if $min < $max {
+        // clamp font-size
+        @supports (font-size: clamp(1px, 2px, 3px)) {
+            font-size: clamp(
+                #{$min * 1px},
+                #{$fluid-size},
+                #{$max * 1px}
+            ) !important;
+        }
+
+        // if clamp not supported, use max font size at desktop
+        @supports not (font-size: clamp(1px, 2px, 3px)) {
+            @media (min-width: $min-desktop) {
+                font-size: $max * 1px !important;
+            }
+        }
+    }
+}
+
+@mixin heading($size-min: $h1-size-min, $size: $h1-size) {
+    @include responsive-font($size-min, $size);
+    font-weight: normal;
+    color: $dark-gray;
+    margin: 0px;
+    line-height: 1.2;
+}
+
+@mixin h1 {
+    @include heading($h1-size-min, $h1-size);
+    font-family: $font-family-heading;
+}
+
+@mixin h2 {
+    @include heading($h2-size-min, $h2-size);
+    font-family: $font-family-heading;
+}
+
+@mixin h3 {
+    @include heading($h3-size-min, $h3-size);
+    font-family: $font-family-heading;
+}
+
+@mixin h4 {
+    @include heading($h4-size-min, $h4-size);
+    font-family: $font-family-heading;
+}
+
+@mixin h5 {
+    @include heading($h5-size-min, $h5-size);
+
+    font-weight: 500;
+    line-height: inherit;
+}
+
+@mixin h6 {
+    @include heading($h6-size-min, $h6-size);
+    font-weight: 500;
+    line-height: inherit;
+}

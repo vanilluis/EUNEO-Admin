@@ -1,0 +1,48 @@
+<!-- Icon.stories.mdx -->
+
+import {
+    Meta,
+    Story,
+    Canvas,
+    ArgsTable,
+    Description,
+} from '@storybook/addon-docs'
+
+import { Icon } from './Icon'
+
+<Meta
+    title="Core/Icon"
+    argTypes={{
+        variant: {
+            name: 'Variant',
+            options: ['search', 'calendar', 'arrow', 'mobile', 'location', 'link', 'email', 'dot', 'arrowL'],
+            control: { type: 'radio' },
+            table: {
+                type: {
+                    summary: 'Variant of the button',
+                },
+                defaultValue: { summary: 'ghost' },
+            },
+        },
+    }}
+/>
+
+# Icon
+
+export const Template = (args) => <Icon {...args} />
+
+<Canvas>
+    <Story
+        name="Default"
+        args={{
+            label: 'Default Icon',
+        }}
+        parameters={{
+            layout: 'centered',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+<ArgsTable story="Default" />

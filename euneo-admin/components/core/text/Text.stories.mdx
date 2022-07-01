@@ -1,0 +1,110 @@
+<!-- Text.stories.mdx -->
+
+import {
+    Meta,
+    Story,
+    ArgsTable,
+    Canvas,
+    Description,
+} from '@storybook/addon-docs'
+
+import { Text } from './Text'
+
+<Meta
+    title="Core/Text"
+    argTypes={{
+        variant: {
+            name: 'Variant',
+            options: ['p', 'h1', 'h2', 'h3', 'h5', 'h5', 'h6', 'date'],
+            control: { type: 'radio' },
+            defaultValue: 'p',
+            table: {
+                type: {
+                    summary: 'Variant of the text',
+                },
+                defaultValue: { summary: 'p' },
+            },
+        },
+    }}
+/>
+
+# Text
+
+### Default Text
+
+export const Template = (args) => <Text {...args}></Text>
+
+<Canvas>
+    <Story
+        name="Default"
+        args={{
+            label: 'Default Lorem ipsum text',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+<ArgsTable story="Default" />
+
+## Stories
+
+### h1
+
+<Story
+    name="h1"
+    args={{
+        variant: 'h1',
+        label: 'This is the h1 variant',
+    }}
+>
+    {Template.bind({})}
+</Story>
+
+### h2
+
+<Story
+    name="h2"
+    args={{
+        variant: 'h2',
+        label: 'This is the h2 variant',
+    }}
+>
+    {Template.bind({})}
+</Story>
+
+### h3
+
+<Story
+    name="h3"
+    args={{
+        variant: 'h3',
+        label: 'This is the h3 variant',
+    }}
+>
+    {Template.bind({})}
+</Story>
+
+### h5
+
+<Story
+    name="h5"
+    args={{
+        variant: 'h5',
+        label: 'This is the h5 variant',
+    }}
+>
+    {Template.bind({})}
+</Story>
+
+### p
+
+<Story
+    name="p"
+    args={{
+        variant: 'p',
+        label: 'This is the p variant',
+    }}
+>
+    {Template.bind({})}
+</Story>

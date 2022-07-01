@@ -1,0 +1,13 @@
+@import 'styles/config';
+
+.container {
+    @include container();
+}
+
+.grid {
+    @include grid($container: false);
+}
+
+.padd {
+    padding: 0px;
+}

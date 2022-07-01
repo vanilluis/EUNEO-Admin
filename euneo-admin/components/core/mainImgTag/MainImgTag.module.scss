@@ -1,0 +1,50 @@
+@import '/styles/config.scss';
+
+.icon {
+    border-radius: 100%;
+    background-color: #f6f6f6;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    transition: all 0.24s ease-in-out;
+}
+
+.text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 30px;
+    background-color: white;
+    color: $dark-gray;
+    z-index: 2;
+    transition: all 0.24s ease-in-out;
+}
+
+.selected {
+    background-color: $soft-green;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .text:hover {
+        background-color: $soft-green;
+    }
+}
+
+// @media (hover: hover) and (pointer: fine) {
+//     .icon:hover {
+//         background-color: $light-rose;
+//     }
+// }
+
+// @media (hover: hover) and (pointer: fine) {
+//     .selected:hover {
+//         background-color: $light-rose;
+//     }
+// }

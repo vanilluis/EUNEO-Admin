@@ -1,0 +1,26 @@
+@import 'styles/config';
+
+.iconBtn {
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba($soft-navy, 0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 200ms var(--default-ease);
+}
+
+.iconBtn__white {
+    composes: iconBtn;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .iconBtn:hover {
+        border: 1px solid rgba($soft-navy, 0.9);
+    }
+    .iconBtn__white:hover {
+        border: 1px solid rgb(255, 255, 255);
+    }
+}

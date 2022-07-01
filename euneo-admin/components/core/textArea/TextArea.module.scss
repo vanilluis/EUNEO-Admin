@@ -1,0 +1,64 @@
+@import 'styles/config';
+
+.area {
+    width: 100%;
+    min-height: 128px;
+    resize: none;
+}
+
+.pointer {
+    pointer-events: none;
+    min-width: fit-content;
+}
+
+.labelInfo {
+    display: flex;
+    gap: scale-to-em(8);
+    width: 100%;
+    @media (max-width: $max-mobile) {
+        position: relative;
+    }
+}
+
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-weight: normal;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    max-width: scale-to-em(588);
+    p {
+        margin: 0px;
+        padding-top: 0px;
+    }
+}
+
+.inputError {
+    color: $color-error;
+    border-color: $color-error !important;
+}
+
+/* Container for the regular input */
+.textarea_container {
+    // display: grid;
+    // grid-template-rows: auto auto min(30px, 50px);
+
+    .error_msg {
+        height: fit-content;
+        margin-top: 4px;
+        min-height: 30px;
+
+        color: $color-error;
+    }
+    .info_msg {
+        height: fit-content;
+        margin-top: 4px;
+        min-height: 30px;
+    }
+}

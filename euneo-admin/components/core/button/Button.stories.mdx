@@ -1,0 +1,200 @@
+<!-- Button.stories.mdx -->
+
+import {
+    Meta,
+    Story,
+    Canvas,
+    ArgsTable,
+    Description,
+} from '@storybook/addon-docs'
+
+import { Button } from './Button'
+
+<Meta
+    title="Core/Button"
+    argTypes={{
+        variant: {
+            name: 'Variant',
+            options: ['ghost', 'text', 'arrow', 'icon', 'arrowL'],
+            control: { type: 'radio' },
+            table: {
+                type: {
+                    summary: 'Variant of the button',
+                },
+                defaultValue: { summary: 'ghost' },
+            },
+        },
+        disabled: {
+            name: 'Disabled',
+            control: { type: 'boolean' },
+            table: {
+                defaultValue: { summary: 'false' },
+            },
+        },
+        arrowDirection: {
+            name: 'ArrowDirection',
+            options: ['r', 'l', 'u', 'd'],
+            control: { type: 'radio' },
+            table: {
+                type: {
+                    summary: 'Direction of the arrow',
+                },
+                defaultValue: { summary: 'ghost' },
+            },
+        },
+        icon: {
+            name: 'Icon',
+            options: ['mobile', 'email', 'location', 'link', 'dot', 'arrow', 'arrowL'],
+            control: { type: 'radio' },
+            table: {
+                type: {
+                    summary: 'choose between icons for icon button',
+                },
+                defaultValue: { summary: 'mobile' },
+            },
+        },
+    }}
+/>
+
+# Button
+
+### Default Button
+
+> Hvernig á disbled takki að líta út?
+
+export const Template = (args) => <Button {...args} />
+
+<Canvas>
+    <Story
+        name="Default"
+        args={{
+            label: 'Default Button',
+        }}
+        parameters={{
+            layout: 'centered',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+<ArgsTable story="Default" />
+
+## Stories
+
+### Ghost
+
+> Þarf að bæta við hover transition
+
+<Canvas>
+    <Story
+        name="Ghost"
+        args={{
+            variant: 'ghost',
+            label: 'Ghost button',
+        }}
+        parameters={{
+            layout: 'centered',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+### Text
+
+> Þarf að bæta við hover transition
+
+<Canvas>
+    <Story
+        name="Text"
+        args={{
+            variant: 'text',
+            label: 'Text button',
+        }}
+        parameters={{
+            layout: 'centered',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+### Arrow
+
+> Þarf að bæta við hover transition
+
+<Canvas>
+    <Story
+        name="Arrow"
+        args={{
+            variant: 'arrow',
+        }}
+        parameters={{
+            layout: 'centered',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+### ArrowL
+
+> Þarf að bæta við hover transition
+
+<Canvas>
+    <Story
+        name="Arrow Large"
+        args={{
+            variant: 'arrowL',
+            label: ''
+        }}
+        parameters={{
+            layout: 'centered',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+
+### TextArrow
+
+> Þarf að bæta við hover transition
+
+<Canvas>
+    <Story
+        name="TextArrow"
+        args={{
+            variant: 'arrow',
+            label: 'Text arrow',
+        }}
+        parameters={{
+            layout: 'centered',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+
+
+### Icon
+
+> Þarf að bæta við hover transition
+
+<Canvas>
+    <Story
+        name="Icon"
+        args={{
+            variant: 'icon',
+            label: 'icon button',
+            icon: 'mobile'
+        }}
+        parameters={{
+            layout: 'centered',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>

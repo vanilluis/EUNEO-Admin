@@ -1,0 +1,60 @@
+<!-- Tooltip.stories.mdx -->
+
+import {
+    Meta,
+    Story,
+    Canvas,
+    ArgsTable,
+    Description,
+} from '@storybook/addon-docs'
+
+import { Tooltip } from './Tooltip'
+
+<Meta
+    title="Core/Tooltip"
+    argTypes={{
+        isActive: {
+            name: 'Active',
+            control: { type: 'boolean' },
+            table: {
+                type: { summary: ':active state of button' },
+                defaultValue: { summary: 'false' },
+            },
+        },
+        isHovered: {
+            name: 'Hovered',
+            control: { type: 'boolean' },
+            table: {
+                type: { summary: ':hover state of button' },
+                defaultValue: { summary: 'false' },
+            },
+        },
+        disabled: {
+            name: 'Disabled',
+            control: { type: 'boolean' },
+            table: {
+                type: { summary: ':disabled state of button' },
+                defaultValue: { summary: 'false' },
+            },
+        },
+    }}
+/>
+
+# Tooltip
+
+### Default
+
+export const Template = (args) => <Tooltip {...args} />
+
+<Canvas>
+    <Story
+        name="Default"
+        args={{
+            text: 'Default Lorem ipsum text',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+<ArgsTable story="Default" />

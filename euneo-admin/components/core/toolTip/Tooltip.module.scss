@@ -1,0 +1,73 @@
+@import '/styles/config.scss';
+
+.infoContainer {
+    position: relative;
+    width: 100%;
+    height: 12px;
+    align-self: flex-start;
+
+    // Makes position static when on phones and makes label relative
+    @media (max-width: $max-mobile) {
+        position: static;
+    }
+}
+@media (pointer: coarse) {
+    .active {
+        .icon {
+            path {
+                fill: $dark-amber;
+            }
+        }
+    }
+}
+
+.infoBox {
+    position: absolute;
+    padding: scale-to-em(24);
+    font-style: italic;
+    background: $white;
+    top: 0;
+    max-width: scale-to-em(300);
+    left: scale-to-em(23);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+    opacity: 0;
+    z-index: 1;
+    transition: all 150ms ease-in-out;
+    visibility: hidden;
+    @media (max-width: $max-mobile) {
+        .active & {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+    @media (max-width: $max-mobile) {
+        max-width: 100%;
+        left: 0;
+        top: scale-to-em(30);
+    }
+}
+
+.iconButton {
+    height: 16px;
+    width: 13px;
+
+    @media (max-width: $max-mobile) {
+        max-width: 100%;
+        justify-self: flex-start;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .iconButton:hover ~ .infoBox {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 150ms ease-in-out;
+    }
+
+    .iconButton:hover .icon {
+        path {
+            fill: $dark-amber;
+        }
+    }
+}

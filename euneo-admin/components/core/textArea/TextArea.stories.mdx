@@ -1,0 +1,27 @@
+<!-- TextArea.stories.mdx -->
+
+import {
+    Meta,
+    Story,
+    ArgsTable,
+    Canvas,
+    Description,
+} from '@storybook/addon-docs'
+
+import { TextArea } from './TextArea'
+
+<Meta title="Core/TextArea" />
+
+# TextArea
+
+### Default TextArea
+
+export const Template = (args) => <TextArea {...args}></TextArea>
+
+<Canvas>
+    <Story name="Default" args={{}}>
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+<ArgsTable story="Default" />

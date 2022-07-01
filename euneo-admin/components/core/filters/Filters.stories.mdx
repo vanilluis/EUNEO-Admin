@@ -1,0 +1,61 @@
+<!-- Filters.stories.mdx -->
+
+import {
+    Meta,
+    Story,
+    Canvas,
+    ArgsTable,
+    Description,
+} from '@storybook/addon-docs'
+
+import { Filters } from './Filters'
+
+<Meta
+    title="Core/Filters"
+    argTypes={{
+        filterNames: {
+            control: { type: 'object' }, // Automatically inferred when 'options' is defined
+            table: {
+                type: {
+                    summary: 'List of filter names',
+                },
+            },
+        },
+        setState: {
+            table: {
+                type: {
+                    summary:
+                        'Set the state of parent component to the filter clicked',
+                },
+            },
+        },
+        selectedIndex: {
+            control: { type: 'number' },
+            table: {
+                type: {
+                    summary: 'Index of the filter that is selected',
+                },
+            },
+        },
+    }}
+/>
+
+# Filters
+
+### Default Filters
+
+export const Template = (args) => <Filters {...args} />
+
+<Canvas>
+    <Story
+        name="Default"
+        args={{
+            filterNames: ['Útför', 'Blóm', 'Veitingar', 'Tónlist', 'Andleg aðstoð', 'Fjármál', 'Skipulagning', 'Prentun'],
+            selectedIndex: 0,
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+<ArgsTable story="Default" />

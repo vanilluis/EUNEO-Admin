@@ -1,0 +1,12 @@
+@import 'styles/config';
+
+.container {
+    background-color: white;
+    border-radius: scale-to-em(8);
+    padding: scale-to-em(40) scale-to-em(48);
+    position: relative;
+
+    @media (max-width: $max-mobile) {
+        padding: scale-to-em(20) scale-to-em(24);
+    }
+}

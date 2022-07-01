@@ -1,0 +1,48 @@
+@import '/styles/config.scss';
+
+.container {
+    // Add scrollbar for mobile/tablet
+    overflow: auto;
+    white-space: nowrap;
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide scrollbar for IE, Edge add Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
+}
+
+.tab {
+    border: 0;
+    font-size: 16px;
+    color: $medium-gray;
+    background-color: transparent;
+    padding: 1.2em 3em 1.2em 0;
+    border-bottom: solid $soft-green 2px;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+    @media (pointer: coarse) {
+        &:active {
+            background-color: $soft-green;
+            border-radius: 5px 5px 0px 0px;
+        }
+    }
+}
+
+.selected {
+    color: $dark-gray;
+
+    font-weight: 500;
+}
+
+.outline {
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: -2px;
+    border-bottom: 2px solid $soft-navy;
+}

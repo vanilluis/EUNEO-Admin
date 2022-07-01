@@ -1,0 +1,117 @@
+/* global generic form styles */
+
+select {
+    // @include input-defaults;
+    // appearance: none will fix safari overkill styles if required
+    // will need to add a select indicator if so
+}
+
+textarea {
+    border: scale-to-em(1px) solid var(--color-border);
+}
+
+// reset styles for all text-type inputs
+textarea,
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='number'],
+input[type='text'],
+input[type='time'],
+input[type='url'],
+input[type='week'],
+input[type='date'],
+input[list] {
+    appearance: none;
+}
+
+select,
+input,
+textarea {
+    &::-webkit-input-placeholder {
+        color: var(--color-placeholder);
+    }
+
+    &::-moz-placeholder {
+        opacity: 1;
+
+        color: var(--color-placeholder);
+    }
+
+    &:-ms-input-placeholder {
+        color: var(--color-placeholder);
+    }
+}
+
+// @each $input in $input-types {
+//     input[type='#{$input}'] {
+//         @include input-defaults;
+//     }
+// }
+
+select {
+    @include input-defaults;
+}
+input[type='number'],
+input[type='text'] {
+    @include input-defaults;
+}
+
+input[type='date'] {
+    @include input-defaults;
+}
+
+textarea {
+    @include input-defaults;
+    resize: vertical;
+    display: block;
+    border-radius: 6px;
+    padding: 2ch 2ch;
+    min-height: 8em;
+}
+
+label {
+    display: block;
+    color: $dark-gray;
+    font-weight: 500;
+    margin-bottom: 0.4em;
+}
+
+input[type='file'] {
+    appearance: none;
+    background-color: aqua;
+}
+
+input[list] {
+    @include input-defaults;
+}
+
+input[type='button'] {
+    @include button;
+
+    appearance: none;
+}
+
+input[type='color'] {
+    padding: 0;
+
+    border: none;
+
+    &::-webkit-color-swatch {
+        border: 1px solid var(--color-border);
+    }
+
+    @if variable-exists(input-height) {
+        height: $input-height;
+        width: $input-height;
+    }
+}
+
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+}

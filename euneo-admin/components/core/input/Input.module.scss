@@ -1,0 +1,189 @@
+@import '/components/core/button/Button.module.scss';
+@import 'styles/config';
+
+.input {
+    @include input-defaults;
+    &[type='file'] {
+        display: none;
+    }
+
+    &[type='file-small'] {
+        display: none;
+    }
+}
+
+.labelInfo {
+    display: flex;
+    gap: scale-to-em(8);
+    width: 100%;
+    @media (max-width: $max-mobile) {
+        position: relative;
+    }
+}
+
+.upload {
+    composes: ghost;
+    width: fit-content;
+    padding: 0em 2.5em;
+    display: flex;
+    position: relative;
+    @include responsive-font(12px, 14px);
+    max-width: 180px;
+    min-width: 120px;
+    span {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+.uploadSmall {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    bottom: -12px;
+    right: 6px;
+}
+
+.pointer {
+    pointer-events: none;
+    min-width: fit-content;
+}
+
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-weight: normal;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    max-width: scale-to-em(588);
+    p {
+        margin: 0px;
+        padding-top: 0px;
+    }
+}
+
+/* Hide the browser's default radio button */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.radio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background-color: $color-background;
+    border: solid #eeebe7 1px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .radio {
+    background-color: rgba(184, 184, 184, 0.4);
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .radio {
+    background-color: $soft-navy;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.radio:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .radio:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .radio:after {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: rgba(184, 184, 184, 0.4);
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: $soft-navy;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background-color: $white;
+    border: solid #eeebe7 1px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.smallGap {
+    margin-bottom: scale-to-em(8);
+    margin-top: 0;
+}
+
+.inputError {
+    color: $color-error;
+    border-color: $color-error !important;
+}
+
+.hasError {
+    margin-bottom: scale-to-em(12);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkSvg {
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ span .checkSvg {
+    display: block;
+}
+
+/* Container for the regular input */
+.input_container {
+    // display: grid;
+    // grid-template-rows: auto auto min(30px, 50px);
+
+    .error_msg {
+        height: fit-content;
+        margin-top: 4px;
+        min-height: 30px;
+
+        color: $color-error;
+    }
+    .info_msg {
+        height: fit-content;
+        margin-top: 4px;
+        min-height: 30px;
+    }
+}

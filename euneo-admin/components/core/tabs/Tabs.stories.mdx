@@ -1,0 +1,61 @@
+<!-- Tabs.stories.mdx -->
+
+import {
+    Meta,
+    Story,
+    Canvas,
+    ArgsTable,
+    Description,
+} from '@storybook/addon-docs'
+
+import { Tabs } from './Tabs'
+
+<Meta
+    title="Core/Tabs"
+    argTypes={{
+        tabNames: {
+            control: { type: 'object' }, // Automatically inferred when 'options' is defined
+            table: {
+                type: {
+                    summary: 'List of tab names',
+                },
+            },
+        },
+        setState: {
+            table: {
+                type: {
+                    summary:
+                        'Set the state of parent component to the tab clicked',
+                },
+            },
+        },
+        selectedTab: {
+            control: { type: 'string' },
+            table: {
+                type: {
+                    summary: 'Index of the tab that is selected',
+                },
+            },
+        },
+    }}
+/>
+
+# Tabs
+
+### Default Tabs
+
+export const Template = (args) => <Tabs {...args} />
+
+<Canvas>
+    <Story
+        name="Default"
+        args={{
+            tabNames: ['Minningargreinar', 'Kveðjur', 'Æviágrip', 'Ættartré'],
+            selectedTab: 'Minningargreinar',
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+<ArgsTable story="Default" />

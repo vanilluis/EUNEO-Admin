@@ -1,0 +1,109 @@
+// GRID as css grid
+
+// parent grid to layout items along a grid
+@mixin grid(
+    $grid-count: $grid-column-count,
+    $direction: ltr,
+    $grid-row-gap: 0,
+    $grid-column-gap: var(--gutter),
+    $container: true
+) {
+    @if ($container == true) {
+        @include container;
+    }
+    // linear until $min-mobile, gives space for gap to not overflow
+    display: grid;
+    align-items: flex-start;
+    gap: $grid-row-gap 0;
+    grid-template-rows: auto;
+    grid-template-columns: repeat($grid-count, minmax(0, 1fr));
+
+    flex: none;
+    direction: $direction;
+
+    width: 100%;
+
+    // mq should be more like ($grid-gutter (px value, not custom prop!) * $grid-column-count)
+    @media (min-width: $min-mobile) {
+        gap: $grid-row-gap $grid-column-gap;
+    }
+}
+
+// individual column. use @include grid-item(5) where number = column span
+@mixin grid-item($col-width: 0, $offset: 0, $column-count: $grid-column-count) {
+    @if ($col-width > 0) {
+        @if ($col-width > $column-count) {
+            grid-column: 1 / -1;
+        }
+
+        @if ($offset > 0) {
+            grid-column: ($offset + 1) / span #{$col-width};
+        } @else {
+            grid-column: span $col-width;
+        }
+    } @else {
+        grid-column: 1 / -1;
+    }
+}
+
+// for nested in-grid flexible-grid using flexbox
+@mixin flex-grid(
+    $direction: ltr,
+    $align: stretch,
+    $justify: flex-start,
+    $grid-gutter: $gutter,
+    $wrap: wrap
+) {
+    display: flex;
+    flex-wrap: $wrap;
+
+    align-items: $align;
+    justify-content: $justify;
+
+    margin-left: -(math.div($grid-gutter, 2));
+    margin-right: -(math.div($grid-gutter, 2));
+
+    @supports (--css: variables) {
+        margin-left: calc(var(--gutter) * -0.5);
+        margin-right: calc(var(--gutter) * -0.5);
+    }
+
+    @if $direction == ltr {
+        flex-direction: row;
+    } @else {
+        flex-direction: row-reverse;
+    }
+}
+
+@function make-percentage($a, $b) {
+    @return math.div(strip-unit($a), strip-unit($b)) * 100%;
+
+    @return $number;
+}
+// flex-grid item
+@mixin flex-grid-item(
+    $width: $grid-column-count,
+    $align: stretch,
+    $grid-gutter: $gutter
+) {
+    flex: none;
+    align-self: $align;
+
+    padding-left: math.div($grid-gutter, 2);
+    padding-right: math.div($grid-gutter, 2);
+
+    width: make-percentage($width, $grid-column-count);
+
+    @supports (--css: variables) {
+        padding-left: calc(var(--gutter) * 0.5);
+        padding-right: calc(var(--gutter) * 0.5);
+    }
+}
+
+@mixin grid-offset-left($offset: 1) {
+    margin-left: make-percentage($offset, $grid-column-count);
+}
+
+@mixin grid-offset-right($offset: 1) {
+    margin-right: make-percentage($offset, $grid-column-count);
+}

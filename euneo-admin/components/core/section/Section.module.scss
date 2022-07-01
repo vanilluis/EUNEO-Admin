@@ -1,0 +1,18 @@
+@import 'styles/config';
+
+.section {
+    @include section(
+        $padding-top: $section-padding,
+        $padding-bottom: $section-padding,
+        $padding-top-mobile: $section-padding-mobile,
+        $padding-bottom-mobile: $section-padding-mobile
+    );
+
+    & + & {
+        padding-top: 0;
+    }
+}
+
+.noDynPadd {
+    padding-top: 60px;
+}

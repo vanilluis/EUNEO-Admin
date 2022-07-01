@@ -1,0 +1,37 @@
+@import 'styles/config';
+
+.labelInfo {
+    display: flex;
+    flex-direction: row;
+    // justify-content: center;
+    align-items: center;
+    gap: scale-to-em(8);
+    width: 100%;
+    margin-bottom: 0.4em;
+
+    // Relative for the tooltip on phones
+    position: relative;
+
+    // toolltip
+    & > div {
+        margin-top: -4px;
+    }
+}
+
+.pointer {
+    display: flex;
+    pointer-events: none;
+    min-width: fit-content;
+    margin: 0px;
+    @include responsive-font(15px, 16px);
+
+    font-weight: 500;
+
+    p {
+        margin: 0px;
+    }
+}
+
+.fileLabel {
+    margin-bottom: scale-to-em(16);
+}

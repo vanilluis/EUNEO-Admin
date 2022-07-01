@@ -1,0 +1,27 @@
+<!-- Input.stories.mdx -->
+
+import {
+    Meta,
+    Story,
+    ArgsTable,
+    Canvas,
+    Description,
+} from '@storybook/addon-docs'
+
+import { Input } from './Input'
+
+<Meta title="Core/Input" />
+
+# Input
+
+### Default Input
+
+export const Template = (args) => <Input {...args}></Input>
+
+<Canvas>
+    <Story name="Default" args={{}}>
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+<ArgsTable story="Default" />
