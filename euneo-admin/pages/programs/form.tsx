@@ -1,15 +1,42 @@
 // React&NextJS
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
+// Services&Helper functions
+import read from "../../services/read";
+// Types
+import { Exercise } from "../../types/types";
 // Styles
 // Components
-import { Text } from "../../components/core/text/Text";
+import Meta from "../../components/meta/Meta";
+import ProgramForm from "../../components/forms/ProgramForm";
 
-const ProgramForm: NextPage = () => {
+type Props = {
+  exercises: Exercise[];
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const exercises = await read.getExercises();
+
+  return {
+    props: {
+      exercises: exercises,
+    },
+  };
+};
+
+const ProgramFormPage: NextPage<Props> = ({ exercises }) => {
   return (
     <>
-      <Text variant="h1">Create Program</Text>
+      <Meta
+        title="Create Program"
+        seoTitle="Create Program"
+        type="website"
+        description="Create new program and add it to program collection."
+        url="localhost:3000/program/form"
+        image=""
+      />
+      <ProgramForm exercises={exercises} />
     </>
   );
 };
 
-export default ProgramForm;
+export default ProgramFormPage;

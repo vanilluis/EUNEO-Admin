@@ -19,21 +19,28 @@ export type ButtonType = {
   arrowDirection?: "r" | "l" | "u" | "d";
   icon?:
     | "search"
-    | "calendar"
     | "arrow"
     | "arrowL"
     | "upload"
-    | "mobile"
     | "location"
     | "link"
     | "email"
     | "logo"
-    | "share"
     | "info"
-    | "dot"
     | "dropdown";
   children?: React.ReactNode;
   invert?: boolean;
+  [key: string]: unknown;
+};
+
+export type IteratorType = {
+  variant?: "text" | "icon";
+  disabled?: boolean;
+  label?: string;
+  icon?: "increase" | "decrease";
+  children?: React.ReactNode;
+  width?: string;
+  height?: string;
   [key: string]: unknown;
 };
 

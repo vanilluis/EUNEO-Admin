@@ -1,0 +1,97 @@
+@import "/styles/config.scss";
+
+.header {
+  margin-bottom: scale-to-em(16);
+  @media (max-width: $max-tablet) {
+    margin-bottom: scale-to-em(8);
+  }
+}
+
+.videoContainer {
+  @include grid-item(3, 8);
+  grid-row: 1;
+  @media (max-width: $max-desktop) {
+    @include grid-item(4, 7);
+  }
+  @media (max-width: $max-tablet) {
+    @include grid-item();
+    grid-row: 1;
+  }
+  margin-bottom: scale-to-em(24);
+
+  width: 100%;
+
+  .defaultBox {
+    height: auto;
+    max-height: scale-to-em(330);
+    width: 100%;
+    text-align: center;
+    aspect-ratio: 1/1;
+    div label {
+      margin-bottom: scale-to-em(16);
+    }
+  }
+
+  .hideBtn {
+    display: none;
+  }
+}
+
+.selected_video {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.buttons {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  justify-content: flex-end;
+  align-content: flex-end;
+  display: flex;
+  transition: all 0.2s ease-in-out;
+  padding: 0.5em;
+  column-gap: 8px;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.errorBox {
+  margin-top: scale-to-em(16);
+}
+
+.error {
+  position: absolute;
+  transform: translateY(-(scale-to-em(24)));
+
+  &__info {
+    transform: translateY(-(scale-to-em(24)));
+  }
+
+  &__img {
+    position: static;
+    transform: translateY(0);
+  }
+  color: $color-error;
+}
+
+.iconContainer {
+  position: absolute;
+  bottom: -13px;
+  right: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.info {
+  margin-top: 0px;
+}

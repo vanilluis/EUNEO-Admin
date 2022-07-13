@@ -2,7 +2,6 @@
 import { NextPage } from "next";
 // Styles
 // Components
-import { Text } from "../../components/core/text/Text";
 import ExerciseForm from "../../components/forms/ExerciseForm";
 import Meta from "../../components/meta/Meta";
 

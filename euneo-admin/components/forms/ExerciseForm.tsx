@@ -1,39 +1,46 @@
 // React&NextJS
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import router from "next/router";
 // 3rd party libraries
 import { useForm } from "react-hook-form";
+// Services&Helper functions
+import read from "../../services/read";
+import write from "../../services/write";
 // Types
 import { ExerciseFormData, defaultFormData } from "../../types/formTypes";
 // Styles
 import s from "./Form.module.scss";
 // Components
-import { Input } from "../core/input/Input";
 import { Section } from "../core/section/Section";
 import { Text } from "../core/text/Text";
 import { Button } from "../core/button/Button";
-import { Icon } from "../core/icon/Icon";
 import { Container } from "../core/container/Container";
-import write from "../../services/write";
+import { General } from "./exerciseForm/General";
+import { Tips } from "./exerciseForm/Tips";
+import { Steps } from "./exerciseForm/Steps";
+import SubmitModal from "../modals/SubmitModal";
+import SuccessModal from "../modals/SuccessModal";
+import VideoUploadModal from "../modals/VideoUploadModal";
 
 export default function ExerciseForm() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState<number>(null);
+  const [exerciseCreated, setExerciseCreated] = useState<boolean>(false);
   const {
     register,
-    unregister,
     handleSubmit,
     control,
-    formState: { errors, isDirty },
+    formState: { errors },
     trigger,
     getValues,
     setValue,
     watch,
+    reset,
   } = useForm<ExerciseFormData>({
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: defaultFormData,
   });
-
-  const steps = getValues("steps");
-  const tips = getValues("tips");
 
   // Executes when there are errors on submit
   const ErrorHandler = async () => {
@@ -44,164 +51,108 @@ export default function ExerciseForm() {
 
   //Function for handling submit event
   const SubmitHandler = async (data: ExerciseFormData) => {
-    const response = await write.addExercise(data);
+    // Check if an exercise video was uploaded
+    const videoFile = data.videoLink?.file || null;
+    if (videoFile) {
+      // Fetch MUX upload data
+      setProgress(1);
+      const uploadData: { id: string; url: string } | null =
+        await read.getUploadURL();
+      // If successfully fetched...
+      if (uploadData && uploadData.url) {
+        // Add video to MUX and then create exercise
+        write.addVideo(
+          videoFile,
+          uploadData,
+          setProgress,
+          createExercise,
+          errorCallback
+        );
+      } else {
+        alert("Could not fetch upload data from server. Please try again.");
+      }
+    } else {
+      await createExercise(null);
+    }
   };
 
-  const addStep = async () => {
-    const steps = getValues("steps");
-    setValue("steps", [...steps, ""]);
-    await trigger("steps");
+  const errorCallback = (errorMsg: string) => {
+    alert(errorMsg);
+    setProgress(null);
   };
 
-  const removeStep = async (index: number) => {
-    const tips = getValues("steps");
-    steps.splice(index, 1);
-    setValue("steps", [...steps]);
-    await trigger("steps");
-  };
+  const createExercise = async (
+    videoData: { displayID: string; assetID: string } | null
+  ) => {
+    setProgress(null);
+    setIsLoading(true);
+    const data = getValues();
+    const successResponse = await write.addExercise(data, videoData);
+    if (!successResponse.success) {
+      alert(successResponse.message);
+    } else {
+      reset();
+      setExerciseCreated(true);
+    }
 
-  const addTip = async () => {
-    const steps = getValues("tips");
-    setValue("tips", [...tips, ""]);
-    await trigger("tips");
-  };
-
-  const removeTip = async (index: number) => {
-    const tips = getValues("tips");
-    tips.splice(index, 1);
-    setValue("tips", [...tips]);
-    await trigger("tips");
+    setIsLoading(false);
   };
 
   return (
-    <Section>
-      <Text variant="h1" align="center">
-        Create Exercise
-      </Text>
-      <Container>
-        {/* Form */}
-        <form
-          className={s.form}
-          onSubmit={handleSubmit(SubmitHandler, ErrorHandler)}
-          id="exercise-create-form"
-        >
-          <div className={s.form_inner}>
-            <Text variant="h3">General Information</Text>
-            <br />
-            <Input
-              type="text"
-              name="name"
-              label="Name*"
-              placeholder="Exercise name..."
-              errorMsg={errors?.name?.message}
+    <>
+      <SubmitModal title="Just a moment..." isOpen={isLoading} />
+      <VideoUploadModal progress={progress} isOpen={progress ? true : false} />
+      <SuccessModal
+        title="Exercise created!"
+        info="Exercise was successfully created. Would you like to create another exercise?"
+        isOpen={exerciseCreated}
+        closeEvent={() => {
+          setExerciseCreated(false);
+          router.push("/");
+        }}
+        submitEvent={() => setExerciseCreated(false)}
+        primaryBtn="Yes, create another exercise"
+        secondaryBtn="No, back to home page"
+      />
+      <form
+        className={s.form}
+        onSubmit={handleSubmit(SubmitHandler, ErrorHandler)}
+        id="exercise-create-form"
+      >
+        <Section>
+          <Text variant="h1" align="center">
+            Create Exercise
+          </Text>
+          <br />
+          <Container>
+            <General
               control={control}
               trigger={trigger}
-              onKeyPress={(e: React.KeyboardEvent) => {
-                e.key === "Enter" && e.preventDefault();
-              }}
-              rules={{
-                required: {
-                  value: true,
-                  message: "Exercise Name is required",
-                },
-              }}
+              errors={errors}
+              setValue={setValue}
+              watch={watch}
             />
-            <Input
-              type="text"
-              name="type"
-              label="Type*"
-              placeholder="Type of exercise..."
-              errorMsg={errors?.type?.message}
-              control={control}
+            <Steps
+              getValues={getValues}
+              setValue={setValue}
               trigger={trigger}
-              onKeyPress={(e: React.KeyboardEvent) => {
-                e.key === "Enter" && e.preventDefault();
-              }}
-              rules={{
-                required: {
-                  value: true,
-                  message: "Type is required",
-                },
-              }}
+              register={register}
             />
-            <Input
-              type="text"
-              name="videoLink"
-              label="Exercise video"
-              placeholder="Video ID..."
-              control={control}
+            <Tips
+              getValues={getValues}
+              setValue={setValue}
               trigger={trigger}
-              onKeyPress={(e: React.KeyboardEvent) => {
-                e.key === "Enter" && e.preventDefault();
-              }}
+              register={register}
             />
-          </div>
-          <div className={s.form_inner}>
-            <div className={s.array_title}>
-              <Text variant="h3">Steps</Text>
-              <Button variant="ghost" type="button" onClick={addStep}>
-                Add Step +
-              </Button>
-            </div>
             <br />
-            {steps.map((step, index) => (
-              <div className={s.array_title} key={`step-${index + 1}`}>
-                <Input
-                  key={`step-${index + 1}`}
-                  name={`step-${index + 1}`}
-                  label={`Step ${index + 1}`}
-                  {...register(`steps.${index}`)}
-                  placeholder="..."
-                  setValue={setValue}
-                  onKeyPress={(e: React.KeyboardEvent) => {
-                    e.key === "Enter" && e.preventDefault();
-                  }}
-                />
-                <button
-                  className={s.trash_btn}
-                  type="button"
-                  onClick={() => removeStep(index)}
-                >
-                  <Icon variant="trash" width="20" height="20" />
-                </button>
-              </div>
-            ))}
-          </div>
-          <div className={s.form_inner}>
-            <div className={s.array_title}>
-              <Text variant="h3">Tips</Text>
-              <Button variant="ghost" type="button" onClick={addTip}>
-                Add Tip +
-              </Button>
-            </div>
-            <br />
-            {tips.map((tip, index) => (
-              <div key={`tip-${index + 1}`} className={s.array_title}>
-                <Input
-                  name={`tip-${index + 1}`}
-                  label={`Tip ${index + 1}`}
-                  {...register(`tips.${index}`)}
-                  placeholder="..."
-                  setValue={setValue}
-                  onKeyPress={(e: React.KeyboardEvent) => {
-                    e.key === "Enter" && e.preventDefault();
-                  }}
-                />
-                <button
-                  className={s.trash_btn}
-                  type="button"
-                  onClick={() => removeTip(index)}
-                >
-                  <Icon variant="trash" width="20" height="20" />
-                </button>
-              </div>
-            ))}
-          </div>
-          <div>
-            <Button type="submit">Submit</Button>
-          </div>
-        </form>
-      </Container>
-    </Section>
+          </Container>
+        </Section>
+        <div className={s.form_footer}>
+          <Button type="submit" form="exercise-create-form">
+            Submit
+          </Button>
+        </div>
+      </form>
+    </>
   );
 }
