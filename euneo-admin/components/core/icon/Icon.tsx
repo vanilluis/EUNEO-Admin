@@ -374,14 +374,14 @@ export const Icon = ({
       //   <path
       //     d="M12 6L12 18"
       //     stroke="#000000"
-      //     stroke-linecap="square"
-      //     stroke-linejoin="round"
+      //     strokeLinecap="square"
+      //     strokeLinejoin="round"
       //   />
       //   <path
       //     d="M18 12L6 12"
       //     stroke="#000000"
-      //     stroke-linecap="square"
-      //     stroke-linejoin="round"
+      //     strokeLinecap="square"
+      //     strokeLinejoin="round"
       //   />
       // </svg>
       <svg
@@ -394,14 +394,14 @@ export const Icon = ({
         <path
           d="M7 1L7 13"
           stroke="#000000"
-          stroke-linecap="square"
-          stroke-linejoin="round"
+          strokeLinecap="square"
+          strokeLinejoin="round"
         />
         <path
           d="M13 7L1 7"
           stroke="#000000"
-          stroke-linecap="square"
-          stroke-linejoin="round"
+          strokeLinecap="square"
+          strokeLinejoin="round"
         />
       </svg>
     );
@@ -417,8 +417,8 @@ export const Icon = ({
         <path
           d="M18 12L6 12"
           stroke="#000000"
-          stroke-linecap="square"
-          stroke-linejoin="round"
+          strokeLinecap="square"
+          strokeLinejoin="round"
         />
       </svg>
     );

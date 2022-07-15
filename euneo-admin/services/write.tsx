@@ -4,7 +4,12 @@ import { collection, getDocs, QueryDocumentSnapshot } from "firebase/firestore";
 // 3rd party libraries
 import * as UpChunk from "@mux/upchunk";
 // Types
-import { ExerciseFormData } from "../types/formTypes";
+import {
+  ExerciseFormData,
+  ProgramDay,
+  ProgramFormData,
+  ProgramPhase,
+} from "../types/formTypes";
 import { Exercise } from "../types/types";
 
 const _createExerciseId = (exerciseName: string, exercises: Exercise[]) => {
@@ -19,8 +24,57 @@ const _createExerciseId = (exerciseName: string, exercises: Exercise[]) => {
   return `${highestID + 1}-${nameLower}`;
 };
 
+const _createProgramId = (programName: string) => {
+  const nameList = programName.trim().toLowerCase().split(" ");
+  const pid = nameList.join("-");
+
+  return pid;
+};
+
+const _mapDays = (days: ProgramDay[]) => {
+  let daysMap = {};
+  days.forEach((day, index) => {
+    daysMap[`d${index + 1}`] = { ...day };
+  });
+
+  return daysMap;
+};
+
+const _mapPhases = (phases: ProgramPhase[]) => {
+  let phaseMap = {};
+  phases.forEach((phase, index) => {
+    phaseMap[`p${index + 1}`] = { ...phase };
+  });
+
+  return phaseMap;
+};
+
 const firestoreWriteService = () => {
   return {
+    addProgram: async (data: ProgramFormData) => {
+      const pid = _createProgramId(data.name);
+      const mappedDays = _mapDays(data.days);
+      const mappedPhases = _mapPhases(data.phases);
+
+      const response = await fetch("/api/programs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          pid,
+          data,
+          days: mappedDays,
+          phases: mappedPhases,
+        }),
+      });
+
+      if (response.ok) {
+        return { success: true, message: "Successfully created program!" };
+      }
+      return {
+        success: false,
+        message: `Program could not be created. ${response.statusText}`,
+      };
+    },
     addExercise: async (
       data: ExerciseFormData,
       videoData: { displayID: string; assetID: string } | null

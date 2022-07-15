@@ -21,6 +21,7 @@ type SelectProps = {
   options: Array<{ label: unknown; value: unknown }>;
   errorMsg?: boolean;
   innerRef?: any;
+  filter?: { label: unknown; value: unknown };
   [key: string]: unknown;
 };
 
@@ -97,7 +98,9 @@ function Select({
         placeholder={placeholder}
         className={c(s.select, className)}
         isSearchable={true}
-        defaultValue={filter ? { label: filter, value: filter } : ""}
+        defaultValue={
+          filter ? { label: filter.label, value: filter.value } : ""
+        }
         // @ts-ignore
         onChange={(e) => {
           setHasValue("locked");

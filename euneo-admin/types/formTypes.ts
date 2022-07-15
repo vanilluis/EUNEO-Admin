@@ -26,9 +26,31 @@ export const defaultFormData: ExerciseFormData = {
 
 export type ProgramFormData = {
   name: string;
-  days: Array<any>;
-  phases: Array<any>;
-  videos: Array<any>;
+  days: Array<ProgramDay>;
+  phases: Array<ProgramPhase>;
+  videos: Array<VideoLink>;
+};
+
+export type ProgramPhase = {
+  days: Array<string>;
+  length: number;
+  "next-phase": Array<{
+    "max-pain": number;
+    "min-pain": number;
+    reference: string;
+  }>;
+};
+
+export type ProgramDay = {
+  exercises: Array<ProgramExercise>;
+};
+
+export type ProgramExercise = {
+  id: string;
+  name: string;
+  reps: number;
+  sets: number;
+  quantity: number;
 };
 
 export const defaultProgramData: ProgramFormData = {
@@ -38,6 +60,15 @@ export const defaultProgramData: ProgramFormData = {
   videos: [],
 };
 
+export const defaultProgramPhase = { days: [], length: 1, "next-phase": [] };
+
+export const defaultProgramExercise = {
+  id: "",
+  name: "",
+  reps: 0,
+  sets: 0,
+  quantity: 0,
+};
 export type ExerciseType = "strength" | "stretch" | "release" | "other";
 
 export const exerciseTypes: ExerciseType[] = [

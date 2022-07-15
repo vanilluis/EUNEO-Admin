@@ -9,21 +9,23 @@ import { Exercise } from "../../types/types";
 import Meta from "../../components/meta/Meta";
 import ProgramForm from "../../components/forms/ProgramForm";
 
-type Props = {
-  exercises: Exercise[];
+type ServerProps = {
+  exercises: string;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const exercises = await read.getExercises();
+  console.log(exercises);
 
   return {
     props: {
-      exercises: exercises,
+      exercises: JSON.stringify(exercises),
     },
   };
 };
 
-const ProgramFormPage: NextPage<Props> = ({ exercises }) => {
+const ProgramFormPage: NextPage<ServerProps> = ({ exercises }) => {
+  const exerciseData: Exercise[] = JSON.parse(exercises);
   return (
     <>
       <Meta
@@ -34,7 +36,7 @@ const ProgramFormPage: NextPage<Props> = ({ exercises }) => {
         url="localhost:3000/program/form"
         image=""
       />
-      <ProgramForm exercises={exercises} />
+      <ProgramForm exercises={exerciseData} />
     </>
   );
 };
