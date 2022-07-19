@@ -13,8 +13,9 @@ import { Exercise } from "../../../types/types";
 import s from "../Form.module.scss";
 // Components
 import { Input } from "../../core/input/Input";
-import { Icon } from "../../core/icon/Icon";
 import Select from "../../core/select/Select";
+import { Text } from "../../core/text/Text";
+import { SquareButton } from "../../core/squarebtn/SquareButton";
 
 type Props = {
   trigger: UseFormTrigger<ProgramFormData>;
@@ -39,8 +40,8 @@ export const DaysExercise = ({
 }: Props) => {
   return (
     <div className={s.program_exercise}>
+      <Text variant="h6">{index + 1}:</Text>
       <Select
-        label={`Exercise ${index + 1}`}
         className={s.exercise_select}
         placeholder="Select exercise..."
         filter={e.name ? { label: e.name, value: e.id } : null}
@@ -70,6 +71,7 @@ export const DaysExercise = ({
             onKeyPress={(e: React.KeyboardEvent) => {
               e.key === "Enter" && e.preventDefault();
             }}
+            noError
           />
           <Input
             name="sets"
@@ -84,6 +86,7 @@ export const DaysExercise = ({
             onKeyPress={(e: React.KeyboardEvent) => {
               e.key === "Enter" && e.preventDefault();
             }}
+            noError
           />
           <Input
             name="quantity"
@@ -98,16 +101,19 @@ export const DaysExercise = ({
             onKeyPress={(e: React.KeyboardEvent) => {
               e.key === "Enter" && e.preventDefault();
             }}
+            noError
           />
         </div>
       )}
-      <button
-        className={s.trash_btn}
+      <SquareButton
         type="button"
+        variant="icon"
+        icon="trash"
+        width="18"
+        height="18"
+        color="red"
         onClick={() => removeExercise(dayIndex, index)}
-      >
-        <Icon variant="trash" width="20" height="20" />
-      </button>
+      />
     </div>
   );
 };

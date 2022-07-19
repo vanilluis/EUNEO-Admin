@@ -59,6 +59,15 @@ export const Button = ({
           {icon ? <Icon variant={icon} /> : <Icon variant="arrowL" />}
         </div>
       )}
+      {variant === "ticker" && (
+        <div className={s.ticker}>
+          <Icon
+            variant={`ticker-${icon as "increase" | "decrease"}`}
+            width="24"
+            height="24"
+          />
+        </div>
+      )}
       {variant === "icon" && (
         <div className={c(s.iconContainer, s[arrowDirection])}>
           <Icon variant={icon} />

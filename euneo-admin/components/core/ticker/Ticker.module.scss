@@ -1,0 +1,40 @@
+@import "styles/config";
+
+.tickerContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em 1em;
+
+  p {
+    margin: 0;
+  }
+}
+
+.label {
+  // reset absolute styling for normal inputs
+  position: relative !important;
+  font-size: 16px !important;
+  margin: 0px !important;
+  transform: none !important;
+  top: auto;
+}
+
+.ticker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  // padding: 0 2em;
+  min-width: 80px;
+
+  p {
+    margin: auto 0.5em;
+  }
+}
+
+.price {
+  color: $soft-green;
+  font-size: 14px;
+  span {
+    color: $dark-gray;
+  }
+}

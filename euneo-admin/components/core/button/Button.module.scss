@@ -1,285 +1,294 @@
-@import '/styles/config.scss';
+@import "/styles/config.scss";
 
 .button {
-    -webkit-tap-highlight-color: transparent; /* for removing the highlight */
-    font-weight: 500;
-    border: 0;
-    background-color: transparent;
-    letter-spacing: 1px;
-    display: flex;
-    width: fit-content;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    text-align: center;
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+  font-weight: 500;
+  border: 0;
+  background-color: transparent;
+  letter-spacing: 1px;
+  display: flex;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  text-align: center;
 
-    transition: opacity 0.2s $default-ease;
-    @media (hover: hover) and (pointer: fine) {
-        &:active {
-            opacity: 0.6;
-        }
+  transition: opacity 0.2s $default-ease;
+  @media (hover: hover) and (pointer: fine) {
+    &:active {
+      opacity: 0.6;
     }
+  }
 }
 
 .disabled {
-    opacity: 0.5;
-    pointer-events: none;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* GHOST */
 .default {
-    composes: button;
+  composes: button;
 
-    min-width: 180px;
-    border-radius: 30px;
-    height: 50px;
-    @media (pointer: coarse) {
-        height: 60px;
-    }
-    z-index: 0;
-    background-color: $soft-green;
-    color: $dark-gray;
-    padding: 1em 2em;
+  min-width: 180px;
+  border-radius: 30px;
+  height: 50px;
+  @media (pointer: coarse) {
+    height: 60px;
+  }
+  z-index: 0;
+  background-color: $soft-green;
+  color: $dark-gray;
+  padding: 1em 2em;
+  position: relative;
+  overflow: hidden;
+  .label {
     position: relative;
-    overflow: hidden;
-    .label {
-        position: relative;
-        z-index: 1;
-    }
-    &:after {
-        background: #dae6e6;
-        content: '';
-        height: 220px;
-        width: 280px;
-        transform: rotate(35deg);
-        left: -330px;
-        position: absolute;
-        transition: all 550ms var(--default-ease);
-        z-index: 0;
-        filter: blur(10px);
-    }
-    &:before {
-        background: #dae6e6;
-        transform: rotate(10deg);
+    z-index: 1;
+  }
+  &:after {
+    background: #dae6e6;
+    content: "";
+    height: 220px;
+    width: 280px;
+    transform: rotate(35deg);
+    left: -330px;
+    position: absolute;
+    transition: all 550ms var(--default-ease);
+    z-index: 0;
+    filter: blur(10px);
+  }
+  &:before {
+    background: #dae6e6;
+    transform: rotate(10deg);
 
-        content: '';
-        height: 155px;
-        z-index: 0;
-        position: absolute;
-        bottom: 170%;
-        transition: all 450ms var(--default-ease);
-        width: 120%;
-        filter: blur(10px);
-    }
+    content: "";
+    height: 155px;
+    z-index: 0;
+    position: absolute;
+    bottom: 170%;
+    transition: all 450ms var(--default-ease);
+    width: 120%;
+    filter: blur(10px);
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .default:hover {
-        &:after {
-            left: 0%;
-            transition-delay: 0.2s;
-        }
-        &:before {
-            bottom: 50%;
-        }
+  .default:hover {
+    &:after {
+      left: 0%;
+      transition-delay: 0.2s;
     }
+    &:before {
+      bottom: 50%;
+    }
+  }
 }
 
 @media (pointer: coarse) {
-    .default:active {
-        background-color: $soft-green;
-    }
+  .default:active {
+    background-color: $soft-green;
+  }
 }
 
 /* GHOST */
 .ghost {
-    composes: default;
+  composes: default;
 
-    box-shadow: 0px 0px 0px 1px $soft-green;
+  box-shadow: 0px 0px 0px 1px $soft-green;
 
-    background-color: transparent;
-    &:after {
-        background: $soft-green;
-    }
-    &:before {
-        background: $soft-green;
-    }
+  background-color: transparent;
+  &:after {
+    background: $soft-green;
+  }
+  &:before {
+    background: $soft-green;
+  }
 }
 
 /* GHOST */
 .ghost__invert {
-    box-shadow: 0px 0px 0px 1px rgba(255, 164, 134, 0.6);
-    background-color: transparent;
-    color: $white;
+  box-shadow: 0px 0px 0px 1px rgba(255, 164, 134, 0.6);
+  background-color: transparent;
+  color: $white;
 
-    &:after {
-        background: #d67e65;
-    }
-    &:before {
-        background: #d67e65;
-    }
+  &:after {
+    background: #d67e65;
+  }
+  &:before {
+    background: #d67e65;
+  }
 }
 
 /* Text */
 .text {
-    composes: button;
-    padding: 0px;
-    height: 24px;
-    color: $dark-amber;
-    box-sizing: border-box;
-    display: inline-block;
-    &:after {
-        display: block;
-        content: '';
-        border-bottom: solid 2px rgba(153, 68, 51, 0.7);
-        transform: scaleX(0);
-        transition: transform 250ms ease-in-out;
-        transform-origin: 100% 50%;
-    }
+  composes: button;
+  padding: 0px;
+  height: 24px;
+  color: $dark-amber;
+  box-sizing: border-box;
+  display: inline-block;
+  &:after {
+    display: block;
+    content: "";
+    border-bottom: solid 2px rgba(153, 68, 51, 0.7);
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+    transform-origin: 100% 50%;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .text:hover {
-        &:after {
-            transform: scaleX(1);
-            transform-origin: 0% 50%;
-        }
+  .text:hover {
+    &:after {
+      transform: scaleX(1);
+      transform-origin: 0% 50%;
     }
+  }
 }
 
 /* Arrow */
 .arrow {
-    composes: button;
+  composes: button;
 
-    border-radius: 30px;
-    height: 50px;
-    @media (pointer: coarse) {
-        height: 60px;
-    }
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    color: $dark-gray;
+  border-radius: 30px;
+  height: 50px;
+  @media (pointer: coarse) {
+    height: 60px;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  color: $dark-gray;
 }
 
 .arrowContainer {
-    min-height: 50px;
-    min-width: 50px;
+  min-height: 50px;
+  min-width: 50px;
 
-    border: 1px solid #c2d6d680;
-    @media (pointer: coarse) {
-        min-height: 60px;
+  border: 1px solid #c2d6d680;
+  @media (pointer: coarse) {
+    min-height: 60px;
 
-        min-width: 60px;
-        border: 1px solid #c2d6d6;
-    }
+    min-width: 60px;
+    border: 1px solid #c2d6d6;
+  }
 
-    border-radius: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 250ms var(--default-ease);
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 250ms var(--default-ease);
 }
 
 .arrow__mirror {
-    flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .arrow:hover .arrowContainer {
-        border-color: $soft-green;
-    }
+  .arrow:hover .arrowContainer {
+    border-color: $soft-green;
+  }
 }
 
 /* ARROW INVERT */
 .arrow__invert {
-    background-color: transparent;
-    color: $white;
+  background-color: transparent;
+  color: $white;
 }
 
 .arrow__noPadd {
-    padding: 0;
+  padding: 0;
 }
 
 .arrowContainer__invert {
-    height: 50px;
-    width: 50px;
-    @media (pointer: coarse) {
-        height: 60px;
-        width: 60px;
-    }
-    border: 1px solid rgba(255, 164, 134, 0.6);
-    border-radius: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 50px;
+  width: 50px;
+  @media (pointer: coarse) {
+    height: 60px;
+    width: 60px;
+  }
+  border: 1px solid rgba(255, 164, 134, 0.6);
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .arrow__invert:hover .arrowContainer__invert {
-        border: 1px solid $soft-green;
-    }
+  .arrow__invert:hover .arrowContainer__invert {
+    border: 1px solid $soft-green;
+  }
 }
 
 .arrowL {
-    composes: button;
+  composes: button;
 
-    border-radius: 30px;
-    height: 50px;
-    @media (pointer: coarse) {
-        height: 60px;
-    }
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    color: $dark-gray;
+  border-radius: 30px;
+  height: 50px;
+  @media (pointer: coarse) {
+    height: 60px;
+  }
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  color: $dark-gray;
 }
 
 .d {
-    transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 .l {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .u {
-    transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+
+/* Ticker */
+.ticker {
+  background-color: rgba(34, 201, 92, 0.1);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Icon */
 .icon {
-    composes: button;
+  composes: button;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row-reverse;
-    margin: 2px 0px 2px 0px;
-    padding: 0px;
-    height: 24px;
-    gap: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row-reverse;
+  margin: 2px 0px 2px 0px;
+  padding: 0px;
+  height: 24px;
+  gap: 5px;
 
-    .label {
-        font-size: 12px;
-        color: $dark-amber;
-    }
+  .label {
+    font-size: 12px;
+    color: $dark-amber;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .icon:hover .label {
-        border-color: $light-rose;
-    }
+  .icon:hover .label {
+    border-color: $light-rose;
+  }
 }
 
 .iconContainer {
-    height: 15px;
-    width: 15px;
-    justify-content: center;
-    margin-right: 5px;
-    display: flex;
-    align-items: center;
+  height: 15px;
+  width: 15px;
+  justify-content: center;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
 }

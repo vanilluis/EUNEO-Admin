@@ -28,24 +28,26 @@ const createSubcollections = async (pid: string, days, phases) => {
   );
 
   const phasesRes = await Promise.all(
-    Object.keys(phases).map((phaseId) => {
+    Object.keys(phases).map(async (phaseId) => {
       try {
         const days = phases[phaseId].days.map((d) => {
           const dayRef = progDoc.collection("days").doc(d);
           return dayRef;
         });
-
         const nextPhases = phases[phaseId]["next-phase"].map((np) => {
-          const npRef = progDoc.collection("phases").doc(np);
+          const npRef = progDoc.collection("phases").doc(np.reference);
           return { ...np, reference: npRef || null };
         });
-        progDoc.collection("phases").doc(phaseId).set({
+        const phaseDoc = await progDoc.collection("phases").doc(phaseId).set({
           days: days,
           length: phases[phaseId].length,
           "next-phase": nextPhases,
         });
+
         return true;
       } catch (error) {
+        console.log(error);
+
         return false;
       }
     })
@@ -60,38 +62,6 @@ const createSubcollections = async (pid: string, days, phases) => {
   );
 };
 
-// const addNextPhases = async (pid: string, phases) => {
-//   const phaseCollection = db.collection(`programs/${pid}/phases`);
-//   const phaseCollectionData = await phaseCollection.get().then((res) => res);
-//   if (phaseCollectionData.docs.length !== Object.keys(phases).length) {
-//     console.log("Here");
-//     return await addNextPhases(pid, phases);
-//   } else {
-//     const phasesRes = await Promise.all(
-//       Object.keys(phases).map((phaseId) => {
-//         try {
-//           const nextPhases = phases[phaseId]["next-phase"].map((np) => {
-//             const npRef = db.collection(`programs/${pid}/phases`).doc(np);
-//             return { ...np, reference: npRef || null };
-//           });
-//           db.collection(`programs/${pid}/phases`)
-//             .doc(phaseId)
-//             .update({
-//               "next-phase": [...nextPhases],
-//             });
-//           return true;
-//         } catch (error) {
-//           console.log(error);
-
-//           return false;
-//         }
-//       })
-//     );
-//     const phaseSubSuccess = phasesRes.filter((phaseSucess) => phaseSucess);
-//     return phaseSubSuccess.length === phasesRes.length;
-//   }
-// };
-
 export default async function previewHandler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -100,7 +70,7 @@ export default async function previewHandler(
     const { pid, data, days, phases } = req.body;
     console.log(pid, data, days, phases);
 
-    const programDocRes = await db
+    const programDocSuccess = await db
       .collection("programs")
       .doc(pid)
       .set({
@@ -115,11 +85,16 @@ export default async function previewHandler(
         return false;
       });
 
-    if (programDocRes) {
-      const subCollectionRes = await createSubcollections(pid, days, phases);
-      //   const nextPhaseRes = await addNextPhases(pid, phases);
-
-      return res.status(201).send({ msg: "Document successfully created." });
+    if (programDocSuccess) {
+      const subCollectionSuccess = await createSubcollections(
+        pid,
+        days,
+        phases
+      );
+      if (subCollectionSuccess) {
+        return res.status(201).send({ msg: "Document successfully created." });
+      }
+      return res.status(500).send({ msg: "Error creating subcollection." });
     } else {
       return res.status(500).send({ msg: "Error writing document." });
     }

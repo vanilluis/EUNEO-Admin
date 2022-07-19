@@ -1,18 +1,18 @@
 @import "/styles/config.scss";
 
-.iterator {
+.squarebtn {
   display: flex;
   align-items: center;
   justify-content: center;
   //   border: 1px solid $medium-gray;
   border-radius: 4px;
-  width: 35px;
   height: 35px;
+  padding: 0.5em;
   transition: opacity 0.2s $default-ease;
   background-color: $soft-green;
 
   &:hover {
-    opacity: 0.6;
+    opacity: 0.8;
   }
 }
 
@@ -27,4 +27,22 @@
   justify-content: center;
   display: flex;
   align-items: center;
+}
+
+.red {
+  background-color: $color-error;
+
+  svg,
+  path {
+    fill: $white;
+  }
+}
+
+.blue {
+  background-color: $soft-navy;
+
+  svg,
+  path {
+    fill: $white;
+  }
 }

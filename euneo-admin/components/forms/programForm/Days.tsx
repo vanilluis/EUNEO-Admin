@@ -17,8 +17,7 @@ import {
 import s from "../Form.module.scss";
 // Components
 import { Text } from "../../core/text/Text";
-import { Icon } from "../../core/icon/Icon";
-import { Iterator } from "../../core/iterator/Iterator";
+import { SquareButton } from "../../core/squarebtn/SquareButton";
 import { Exercise } from "../../../types/types";
 import { DaysExercise } from "./DaysExercise";
 
@@ -28,6 +27,7 @@ type Props = {
   getValues: UseFormGetValues<ProgramFormData>;
   register: UseFormRegister<ProgramFormData>;
   addDay: () => void;
+  copyDay: (i: number) => void;
   exercises: Exercise[];
 };
 
@@ -37,16 +37,11 @@ export const Days = ({
   trigger,
   register,
   addDay,
+  copyDay,
   exercises,
 }: Props) => {
   const days = getValues("days");
   const [clearing, setClearing] = useState<boolean>(false);
-
-  //   const addDay = async () => {
-  //     const allDays = getValues("days");
-  //     setValue("days", [...allDays, { exercises: [] }]);
-  //     await trigger("days");
-  //   };
 
   const addExercise = async (index: number) => {
     const selectedDay = days[index];
@@ -95,11 +90,45 @@ export const Days = ({
     return valid;
   };
 
+  const renderActionButtons = (i: number) => {
+    const btnProps = {
+      type: "button",
+      width: "18",
+      height: "18",
+    };
+    return (
+      <>
+        <SquareButton
+          {...btnProps}
+          variant="text"
+          label="Add exercise +"
+          onClick={() => addExercise(i)}
+        />
+        {days.length > 1 && (
+          <SquareButton
+            {...btnProps}
+            variant="icon"
+            icon="copy"
+            color="blue"
+            onClick={() => copyDay(i)}
+          />
+        )}
+        <SquareButton
+          {...btnProps}
+          variant="icon"
+          icon="trash"
+          color="red"
+          onClick={() => removeDay(i)}
+        />
+      </>
+    );
+  };
+
   return (
     <div className={s.form_inner}>
       <div className={s.array_title}>
         <Text variant="h3">Program days</Text>
-        <Iterator
+        <SquareButton
           type="button"
           variant="icon"
           icon="increase"
@@ -130,20 +159,8 @@ export const Days = ({
         >
           <div className={s.array_title}>
             <Text variant="h4">D{i + 1}</Text>
-            <button
-              className={s.trash_btn}
-              type="button"
-              onClick={() => removeDay(i)}
-            >
-              <Icon variant="trash" width="20" height="20" />
-            </button>
+            {renderActionButtons(i)}
           </div>
-          <div className={s.array_title}>
-            <button type="button" onClick={() => addExercise(i)}>
-              add exercise
-            </button>
-          </div>
-          <br />
           {!clearing &&
             d?.exercises?.map((e, index) => (
               <DaysExercise

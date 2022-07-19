@@ -48,9 +48,14 @@ const GenerateModal = ({ type, isOpen, submitEvent, closeEvent }: Props) => {
     }
   }, [inView, controls]);
 
-  useKeyDown(["Escape"], ({ key }) => {
+  useKeyDown(["Escape", "Enter"], ({ key }) => {
     if (key === "Escape" && isOpen) {
       closeEvent();
+    } else if (key === "Enter" && isOpen) {
+      const submitBtn = document.getElementById(
+        "submit-btn"
+      ) as HTMLButtonElement;
+      if (submitBtn && !submitBtn.disabled) submitBtn.click();
     }
   });
 
@@ -148,6 +153,7 @@ const GenerateModal = ({ type, isOpen, submitEvent, closeEvent }: Props) => {
                 </Button>
                 {(type === "days" || page === 2) && (
                   <Button
+                    id="submit-btn"
                     type="button"
                     disabled={generateValue < 1 || isZeroLengthPhase()}
                     className={s.button}

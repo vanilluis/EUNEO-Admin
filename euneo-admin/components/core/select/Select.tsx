@@ -91,7 +91,9 @@ function Select({
 
   return (
     <div className={s.input_container}>
-      <Label className={c(s.label, hasValue && s.hasValue)}>{label}</Label>
+      {label && (
+        <Label className={c(s.label, hasValue && s.hasValue)}>{label}</Label>
+      )}
       <Selector
         components={{ Option }}
         options={customOptions}

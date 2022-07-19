@@ -23,7 +23,10 @@ type Props = {
     | "cloud"
     | "x"
     | "increase"
-    | "decrease";
+    | "decrease"
+    | "ticker-increase"
+    | "ticker-decrease"
+    | "copy";
   children?: React.ReactNode;
   width?: string;
   height?: string;
@@ -367,18 +370,18 @@ export const Icon = ({
       // <svg
       //   width={width || "24"}
       //   height={height || "24"}
-      //   viewBox="0 0 24 24"
+      //   viewBox="0 0 26 26"
       //   fill="none"
       //   xmlns="http://www.w3.org/2000/svg"
       // >
       //   <path
-      //     d="M12 6L12 18"
+      //     d="M13 7L13 18"
       //     stroke="#000000"
       //     strokeLinecap="square"
       //     strokeLinejoin="round"
       //   />
       //   <path
-      //     d="M18 12L6 12"
+      //     d="M19 13L7 13"
       //     stroke="#000000"
       //     strokeLinecap="square"
       //     strokeLinejoin="round"
@@ -416,6 +419,61 @@ export const Icon = ({
       >
         <path
           d="M18 12L6 12"
+          stroke="#000000"
+          strokeLinecap="square"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  } else if (variant === "copy") {
+    return (
+      <svg
+        width={width || "12"}
+        height={height || "14"}
+        viewBox="0 0 12 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M8.33317 0.583984H1.33317C0.691504 0.583984 0.166504 1.10898 0.166504 1.75065V9.91732H1.33317V1.75065H8.33317V0.583984ZM10.0832 2.91732H3.6665C3.02484 2.91732 2.49984 3.44232 2.49984 4.08398V12.2507C2.49984 12.8923 3.02484 13.4173 3.6665 13.4173H10.0832C10.7248 13.4173 11.2498 12.8923 11.2498 12.2507V4.08398C11.2498 3.44232 10.7248 2.91732 10.0832 2.91732ZM10.0832 12.2507H3.6665V4.08398H10.0832V12.2507Z"
+          fill="#666666"
+        />
+      </svg>
+    );
+  } else if (variant === "ticker-increase") {
+    return (
+      <svg
+        width={width || "32"}
+        height={height || "32"}
+        viewBox="0 0 26 26"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M13 7L13 18"
+          stroke="#000000"
+          strokeLinecap="square"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M19 13L7 13"
+          stroke="#000000"
+          strokeLinecap="square"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  } else if (variant === "ticker-decrease") {
+    return (
+      <svg
+        width={width || "32"}
+        height={height || "32"}
+        viewBox="0 0 26 26"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13L7 13"
           stroke="#000000"
           strokeLinecap="square"
           strokeLinejoin="round"

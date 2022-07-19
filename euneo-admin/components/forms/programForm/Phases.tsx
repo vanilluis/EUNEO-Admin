@@ -1,5 +1,5 @@
 // React&NextJS
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // 3rd party libraries
 import {
   UseFormGetValues,
@@ -8,16 +8,16 @@ import {
   UseFormTrigger,
 } from "react-hook-form";
 // Types
-import { ProgramFormData } from "../../../types/formTypes";
+import { ProgramFormData, ProgramPhase } from "../../../types/formTypes";
 // Styles
 import s from "../Form.module.scss";
 // Components
 import { Text } from "../../core/text/Text";
-import { Icon } from "../../core/icon/Icon";
-import { Iterator } from "../../core/iterator/Iterator";
-import Select from "../../core/select/Select";
-import { Input } from "../../core/input/Input";
+import { SquareButton } from "../../core/squarebtn/SquareButton";
 import { NextPhase } from "./NextPhase";
+import { PhaseDay } from "./PhaseDay";
+import programHelperFunctions from "../../../utils/programHelperFunctions";
+import { Ticker } from "../../core/ticker/Ticker";
 
 type Props = {
   trigger: UseFormTrigger<ProgramFormData>;
@@ -25,6 +25,8 @@ type Props = {
   getValues: UseFormGetValues<ProgramFormData>;
   register: UseFormRegister<ProgramFormData>;
   addPhase: () => void;
+  copyPhase: (i: number) => void;
+  copying: boolean;
 };
 
 export const Phases = ({
@@ -33,17 +35,29 @@ export const Phases = ({
   trigger,
   register,
   addPhase,
+  copyPhase,
+  copying,
 }: Props) => {
   const [clearing, setClearing] = useState<boolean>(false);
 
   const phases = getValues("phases");
   const days = getValues("days");
 
-  //   const addPhase = async () => {
-  //     const allPhases = getValues("phases");
-  //     setValue("phases", [...allPhases, { ...defaultProgramPhase }]);
-  //     await trigger("phases");
-  //   };
+  useEffect(() => {
+    const dayIndexList = days.map((d, i) => `d${i + 1}`);
+
+    phases.forEach((p, i) => {
+      const updatedDays = p.days.map((d) => {
+        if (!dayIndexList.includes(d)) {
+          return "";
+        }
+        return d;
+      });
+      setValue(`phases.${i}.days`, updatedDays);
+    });
+
+    trigger("phases");
+  }, [days]);
 
   const addDay = async (index: number) => {
     const phase = phases[index];
@@ -66,77 +80,77 @@ export const Phases = ({
   };
 
   const removePhase = async (index: number) => {
+    setClearing(true);
+
     const allPhases = getValues("phases");
     allPhases.splice(index, 1);
+    const updatedPhases = programHelperFunctions.updateNextPhases(
+      allPhases,
+      index
+    );
 
-    setValue("phases", [...allPhases]);
+    setValue("phases", [...updatedPhases]);
     await trigger("phases");
-  };
-
-  const removeDay = async (phaseIndex: number, index: number) => {
-    setClearing(true);
-
-    const phase = phases[phaseIndex];
-    phase.days.splice(index, 1);
-
-    setValue(`phases.${phaseIndex}`, { ...phase });
-    await trigger(`phases.${phaseIndex}`);
 
     setClearing(false);
   };
 
-  const removeNextPhase = async (phaseIndex: number, index: number) => {
-    setClearing(true);
-    console.log(phaseIndex, index);
-
-    const phase = phases[phaseIndex];
-    console.log(phase);
-
-    phase["next-phase"].splice(index, 1);
-    console.log(phase);
-
-    setValue(`phases.${phaseIndex}`, { ...phase });
-    await trigger(`phases.${phaseIndex}`);
-
-    setClearing(false);
+  const validatePhase = (p: ProgramPhase) => {
+    return programHelperFunctions.validatePhase(p);
   };
 
-  const refExists = async (
-    phaseIndex: number,
-    reference: string,
-    field: string
-  ) => {
-    let options = [];
-    let exists = true;
-    if (field === "next-phase") {
-      options = phases.map((p, index) => `p${index + 1}`);
-      exists = options.includes(reference);
-      console.log(options, exists);
+  const renderActionButtons = (p: ProgramPhase, i: number) => {
+    const btnProps = {
+      type: "button",
+      width: "18",
+      height: "18",
+    };
 
-      if (!exists) {
-        const phaseToRemove = phases[phaseIndex]["next-phase"].findIndex(
-          (np) => np.reference === reference
-        );
-        await removeNextPhase(phaseIndex, phaseToRemove);
-      }
-    } else {
-      options = days.map((d, index) => `d${index + 1}`);
-    }
-    console.log(options, reference);
-
-    return exists;
+    return (
+      <>
+        <SquareButton
+          {...btnProps}
+          variant="text"
+          label="Add day +"
+          disabled={p.days.length === p.length}
+          onClick={() => addDay(i)}
+        />
+        <SquareButton
+          {...btnProps}
+          variant="text"
+          label="Add next phase +"
+          onClick={() => addNextPhase(i)}
+        />
+        {phases.length > 1 && (
+          <SquareButton
+            {...btnProps}
+            variant="icon"
+            icon="copy"
+            color="blue"
+            onClick={() => copyPhase(i)}
+          />
+        )}
+        <SquareButton
+          {...btnProps}
+          variant="icon"
+          icon="trash"
+          color="red"
+          onClick={() => removePhase(i)}
+        />
+      </>
+    );
   };
 
   return (
     <div className={s.form_inner}>
       <div className={s.array_title}>
         <Text variant="h3">Program Phases</Text>
-        <Iterator
+        <SquareButton
           type="button"
           variant="icon"
           icon="increase"
-          width="18"
-          height="18"
+          width="16"
+          height="16"
           onClick={addPhase}
         />
       </div>
@@ -146,82 +160,74 @@ export const Phases = ({
       </Text>
 
       <br />
-      {phases.map((p, i: number) => (
-        <div
-          className={s.program_day}
-          key={`phase-${i + 1}`}
-          {...register(`phases.${i}`)}
-        >
-          <div className={s.array_title}>
-            <Text variant="h4">P{i + 1}</Text>
-            <button
-              className={s.trash_btn}
-              type="button"
-              onClick={() => removePhase(i)}
-            >
-              <Icon variant="trash" width="20" height="20" />
-            </button>
-          </div>
-          <div className={s.array_title}>
-            <button type="button" onClick={() => addDay(i)}>
-              add day
-            </button>
-          </div>
-          <br />
-          {!clearing &&
-            p.days?.map((d, index) => (
-              <div className={s.program_exercise} key={`p-${i}d-${index + 1}`}>
-                <Select
-                  label={`Day ${index + 1}`}
-                  className={s.exercise_select}
-                  placeholder="Select day..."
-                  filter={
-                    d && refExists(i, d, "days") ? { label: d, value: d } : null
-                  }
-                  options={days.map((d, index) => {
-                    return {
-                      label: `d${index + 1}`,
-                      value: `d${index + 1}`,
-                    };
-                  })}
-                  onChange={(d: { label: string; value: string }) => {
-                    setValue(`phases.${i}.days.${index}`, d.value);
-
-                    trigger(`phases.${i}.days.${index}`);
-                  }}
+      {!clearing &&
+        phases.map((p, i: number) => (
+          <div
+            className={s.program_day}
+            key={`phase-${i + 1}`}
+            {...register(`phases.${i}`, {
+              validate: {
+                validPhase: (p) => validatePhase(p),
+              },
+            })}
+          >
+            <div className={s.array_title}>
+              <Text variant="h4">P{i + 1}</Text>
+              {!copying && (
+                <Ticker
+                  label=""
+                  name={`phases.${i}.length`}
+                  minVal={p.days?.length || 1}
+                  maxVal={9999999}
+                  setValue={setValue}
+                  increaseFunc={() => trigger(`phases.${i}.length`)}
+                  decreaseFunc={() => trigger(`phases.${i}.length`)}
+                  initVal={p.length}
+                  valueText="days"
                 />
-                <button
-                  className={s.trash_btn}
-                  type="button"
-                  onClick={() => removeDay(i, index)}
-                >
-                  <Icon variant="trash" width="20" height="20" />
-                </button>
-              </div>
-            ))}
-          <div className={s.array_title}>
-            <button type="button" onClick={() => addNextPhase(i)}>
-              add next phase
-            </button>
+              )}
+            </div>
+            <div className={s.array_title}>{renderActionButtons(p, i)}</div>
+
+            {p.days.length > 0 && (
+              <Text variant="h5">Days (max {p.length})</Text>
+            )}
+            {!clearing &&
+              p.days?.map((d, index) => (
+                <PhaseDay
+                  key={`p${i}-d${index + 1}`}
+                  setValue={setValue}
+                  trigger={trigger}
+                  setClearing={setClearing}
+                  index={index}
+                  d={d}
+                  phaseIndex={i}
+                  phases={phases}
+                  days={days}
+                />
+              ))}
+            <br />
+            {p["next-phase"].length > 0 && (
+              <Text variant="h5">Next phases</Text>
+            )}
+            {!clearing &&
+              p &&
+              p["next-phase"]?.map((np, index) => (
+                <NextPhase
+                  key={`p${i}-np${index + 1}`}
+                  trigger={trigger}
+                  setValue={setValue}
+                  getValues={getValues}
+                  register={register}
+                  setClearing={setClearing}
+                  np={np}
+                  index={index}
+                  phaseIndex={i}
+                  phases={phases}
+                />
+              ))}
           </div>
-          <br />
-          {!clearing &&
-            p &&
-            p["next-phase"]?.map((np, index) => (
-              <NextPhase
-                key={`p${i}-np${index + 1}`}
-                trigger={trigger}
-                setValue={setValue}
-                getValues={getValues}
-                register={register}
-                np={np}
-                index={index}
-                phaseIndex={i}
-                phases={phases}
-              />
-            ))}
-        </div>
-      ))}
+        ))}
     </div>
   );
 };

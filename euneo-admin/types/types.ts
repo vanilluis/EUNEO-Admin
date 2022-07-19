@@ -13,7 +13,7 @@ export type Exercise = {
 
 export type ButtonType = {
   to?: string;
-  variant?: "ghost" | "text" | "arrow" | "icon" | "arrowL";
+  variant?: "ghost" | "text" | "arrow" | "icon" | "arrowL" | "ticker";
   disabled?: boolean;
   label?: string;
   arrowDirection?: "r" | "l" | "u" | "d";
@@ -27,20 +27,23 @@ export type ButtonType = {
     | "email"
     | "logo"
     | "info"
-    | "dropdown";
+    | "dropdown"
+    | "increase"
+    | "decrease";
   children?: React.ReactNode;
   invert?: boolean;
   [key: string]: unknown;
 };
 
-export type IteratorType = {
+export type SquareButtonType = {
   variant?: "text" | "icon";
   disabled?: boolean;
   label?: string;
-  icon?: "increase" | "decrease";
+  icon?: "increase" | "decrease" | "trash" | "copy";
   children?: React.ReactNode;
   width?: string;
   height?: string;
+  color?: "green" | "blue" | "red";
   [key: string]: unknown;
 };
 

@@ -104,7 +104,7 @@ export default function ExerciseForm() {
       <VideoUploadModal progress={progress} isOpen={progress ? true : false} />
       <SuccessModal
         title="Exercise created!"
-        info="Exercise was successfully created. Would you like to create another exercise?"
+        info="Exercise was successfully created. Would you like to create another one?"
         isOpen={exerciseCreated}
         closeEvent={() => {
           setExerciseCreated(false);

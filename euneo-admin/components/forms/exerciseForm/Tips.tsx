@@ -16,7 +16,7 @@ import { Input } from "../../core/input/Input";
 import { Text } from "../../core/text/Text";
 import { Button } from "../../core/button/Button";
 import { Icon } from "../../core/icon/Icon";
-import { Iterator } from "../../core/iterator/Iterator";
+import { SquareButton } from "../../core/squarebtn/SquareButton";
 
 type Props = {
   trigger: UseFormTrigger<ExerciseFormData>;
@@ -45,7 +45,7 @@ export const Tips = ({ setValue, getValues, trigger, register }: Props) => {
     <div className={s.form_inner}>
       <div className={s.array_title}>
         <Text variant="h3">Tips</Text>
-        <Iterator
+        <SquareButton
           type="button"
           variant="icon"
           icon="increase"
