@@ -1,14 +1,14 @@
 // React&NextJS
 import React, { useEffect, useState } from "react";
 // 3rd party libraries
-import {
-  Canvas,
-  NodeProps,
-  Node,
-  NodeData,
-  EdgeData,
-  CanvasPosition,
-} from "reaflow";
+// import {
+//   Canvas,
+//   NodeProps,
+//   Node,
+//   NodeData,
+//   EdgeData,
+//   CanvasPosition,
+// } from "reaflow";
 // Types
 // Styles
 import s from "../Form.module.scss";
@@ -23,72 +23,72 @@ type Props = {
 
 export const Summary = ({ data }: Props) => {
   const [selectedPhase, setSelectedPhase] = useState<number>(0);
-  const [nodes, setNodes] = useState<Array<NodeData>>([]);
-  const [edges, setEdges] = useState<Array<EdgeData>>([]);
-  const [canvasWidth, setCanvasWidth] = useState<number>(0);
-  const [canvasHeight, setCanvasHeight] = useState<number>(0);
+  // const [nodes, setNodes] = useState<Array<NodeData>>([]);
+  // const [edges, setEdges] = useState<Array<EdgeData>>([]);
+  // const [canvasWidth, setCanvasWidth] = useState<number>(0);
+  // const [canvasHeight, setCanvasHeight] = useState<number>(0);
 
-  useEffect(() => {
-    getNodes();
-    getEdges();
-    getRect();
-  }, []);
+  // useEffect(() => {
+  //   getNodes();
+  //   getEdges();
+  //   getRect();
+  // }, []);
 
-  const getNodes = () => {
-    const nodes = data.phases.map((p, i) => {
-      return {
-        id: `p${i + 1}`,
-        text: `P${i + 1}`,
-        disabled: true,
-      };
-    });
+  // const getNodes = () => {
+  //   const nodes = data.phases.map((p, i) => {
+  //     return {
+  //       id: `p${i + 1}`,
+  //       text: `P${i + 1}`,
+  //       disabled: true,
+  //     };
+  //   });
 
-    setNodes(nodes);
-  };
+  //   setNodes(nodes);
+  // };
 
-  const getEdges = () => {
-    const reducer = (
-      prevVal: Array<EdgeData>,
-      currVal: ProgramPhase,
-      index: number
-    ) => {
-      const pid = `p${index + 1}`;
-      if (currVal["next-phase"]) {
-        currVal["next-phase"].forEach((np, i) => {
-          const edge = {
-            id: `${pid}-${np.reference}`,
-            text: `${np["min-pain"]} to ${np["max-pain"]}`,
-            from: `${pid}`,
-            to: `${np.reference}`,
-            disabled: true,
-          };
-          prevVal.push(edge);
-        });
-      }
-      return prevVal;
-    };
+  // const getEdges = () => {
+  //   const reducer = (
+  //     prevVal: Array<EdgeData>,
+  //     currVal: ProgramPhase,
+  //     index: number
+  //   ) => {
+  //     const pid = `p${index + 1}`;
+  //     if (currVal["next-phase"]) {
+  //       currVal["next-phase"].forEach((np, i) => {
+  //         const edge = {
+  //           id: `${pid}-${np.reference}`,
+  //           text: `${np["min-pain"]} to ${np["max-pain"]}`,
+  //           from: `${pid}`,
+  //           to: `${np.reference}`,
+  //           disabled: true,
+  //         };
+  //         prevVal.push(edge);
+  //       });
+  //     }
+  //     return prevVal;
+  //   };
 
-    const edges = data.phases.reduce(reducer, []) || [];
-    console.log(edges);
+  //   const edges = data.phases.reduce(reducer, []) || [];
+  //   console.log(edges);
 
-    setEdges(edges);
-  };
+  //   setEdges(edges);
+  // };
 
-  const getRect = () => {
-    const canvas_item = document.getElementsByTagName("g")[0];
-    const item_rect = canvas_item?.getBoundingClientRect() || null;
+  // const getRect = () => {
+  //   const canvas_item = document.getElementsByTagName("g")[0];
+  //   const item_rect = canvas_item?.getBoundingClientRect() || null;
 
-    if (item_rect && item_rect.width > 0) {
-      setCanvasWidth(item_rect.width + 50);
-      setCanvasHeight(item_rect.height + 50);
-    } else {
-      setCanvasWidth(0);
-      setCanvasHeight(0);
-      setTimeout(() => {
-        getRect();
-      }, 500);
-    }
-  };
+  //   if (item_rect && item_rect.width > 0) {
+  //     setCanvasWidth(item_rect.width + 50);
+  //     setCanvasHeight(item_rect.height + 50);
+  //   } else {
+  //     setCanvasWidth(0);
+  //     setCanvasHeight(0);
+  //     setTimeout(() => {
+  //       getRect();
+  //     }, 500);
+  //   }
+  // };
 
   return (
     <div className={s.form_inner}>
@@ -135,11 +135,28 @@ export const Summary = ({ data }: Props) => {
             </div>
           );
         })}
+        {data.phases[selectedPhase]["next-phase"].length > 0 && (
+          <div className={s.day_summary}>
+            <Text variant="h6">Next Phases</Text>
+            {data.phases[selectedPhase]["next-phase"].map(
+              (np, index: number) => (
+                <div key={index}>
+                  <Text variant="p">{np.reference.toUpperCase()}</Text>
+                  <div className={s.exercise_summary}>
+                    <Text variant="p-small">
+                      - Pain index between {np["min-pain"]} and {np["max-pain"]}
+                    </Text>
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        )}
       </div>
-      <div className={s.array_title}>
+      {/* <div className={s.array_title}>
         <Text variant="h3">Program Setup</Text>
-      </div>
-      <div id="my-canvas" className={s.next_phase_summary}>
+      </div> */}
+      {/* <div id="my-canvas" className={s.next_phase_summary}>
         <Canvas
           maxHeight={canvasHeight}
           maxWidth={canvasWidth}
@@ -159,7 +176,7 @@ export const Summary = ({ data }: Props) => {
           //   // />
           // )}
         />
-      </div>
+      </div> */}
     </div>
   );
 };
