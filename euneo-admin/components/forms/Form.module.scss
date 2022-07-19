@@ -51,6 +51,7 @@
   display: flex;
   gap: 1em;
   align-items: center;
+  position: relative;
 }
 
 .trash_btn {
@@ -78,6 +79,7 @@
 
 .form_buttons {
   height: 100%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -101,13 +103,17 @@
 
 .program_day {
   margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
 .program_exercise {
   display: flex;
   align-items: flex-end;
   gap: 1em;
-  padding: 0.75em 0.75em 0 0.75em;
+  padding: 0 1em;
+  margin-bottom: 1em;
 
   button,
   h6 {
@@ -117,6 +123,26 @@
   @media (max-width: $max-tablet) {
     flex-direction: column;
   }
+}
+
+.action_buttons {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  z-index: 1;
+  bottom: 0;
+  background-color: $white;
+  left: 75px;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 0.5em;
+}
+
+.day_exercise_list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2em;
 }
 
 .exercise_select {

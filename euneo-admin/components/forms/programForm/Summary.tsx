@@ -22,7 +22,6 @@ type Props = {
 };
 
 export const Summary = ({ data }: Props) => {
-  console.log(data);
   const [selectedPhase, setSelectedPhase] = useState<number>(0);
   const [nodes, setNodes] = useState<Array<NodeData>>([]);
   const [edges, setEdges] = useState<Array<EdgeData>>([]);
@@ -43,8 +42,6 @@ export const Summary = ({ data }: Props) => {
         disabled: true,
       };
     });
-
-    console.log(nodes);
 
     setNodes(nodes);
   };
@@ -85,7 +82,7 @@ export const Summary = ({ data }: Props) => {
       setCanvasWidth(item_rect.width + 50);
       setCanvasHeight(item_rect.height + 50);
     } else {
-      setCanvasWidth(2000);
+      setCanvasWidth(0);
       setCanvasHeight(0);
       setTimeout(() => {
         getRect();
@@ -142,29 +139,27 @@ export const Summary = ({ data }: Props) => {
       <div className={s.array_title}>
         <Text variant="h3">Program Setup</Text>
       </div>
-      {nodes && edges && (
-        <div id="my-canvas" className={s.next_phase_summary}>
-          <Canvas
-            maxHeight={canvasHeight}
-            maxWidth={canvasWidth}
-            defaultPosition={CanvasPosition.LEFT}
-            direction="RIGHT"
-            nodes={nodes}
-            edges={edges}
-            className={s.program_setup}
-            onLayoutChange={(layout) => console.log("Layout", layout)}
-            node={(node: NodeProps) => (
-              <Node
-                {...node}
+      <div id="my-canvas" className={s.next_phase_summary}>
+        <Canvas
+          maxHeight={canvasHeight}
+          maxWidth={canvasWidth}
+          defaultPosition={CanvasPosition.LEFT}
+          direction="RIGHT"
+          nodes={nodes}
+          edges={edges}
+          className={s.program_setup}
+          onLayoutChange={(layout) => console.log("Layout", layout)}
+          // node={(node: NodeProps) => (
+          //   // <Node
+          //   //   {...node}
 
-                // onClick={() => {
-                //   console.log("click");
-                // }}
-              />
-            )}
-          />
-        </div>
-      )}
+          //   //   // onClick={() => {
+          //   //   //   console.log("click");
+          //   //   // }}
+          //   // />
+          // )}
+        />
+      </div>
     </div>
   );
 };

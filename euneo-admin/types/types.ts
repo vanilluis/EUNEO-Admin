@@ -29,7 +29,8 @@ export type ButtonType = {
     | "info"
     | "dropdown"
     | "increase"
-    | "decrease";
+    | "decrease"
+    | "settings";
   children?: React.ReactNode;
   invert?: boolean;
   [key: string]: unknown;

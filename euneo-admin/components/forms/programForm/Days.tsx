@@ -20,6 +20,7 @@ import { Text } from "../../core/text/Text";
 import { SquareButton } from "../../core/squarebtn/SquareButton";
 import { Exercise } from "../../../types/types";
 import { DaysExercise } from "./DaysExercise";
+import { Button } from "../../core/button/Button";
 
 type Props = {
   trigger: UseFormTrigger<ProgramFormData>;
@@ -161,20 +162,22 @@ export const Days = ({
             <Text variant="h4">D{i + 1}</Text>
             {renderActionButtons(i)}
           </div>
-          {!clearing &&
-            d?.exercises?.map((e, index) => (
-              <DaysExercise
-                key={`d${i}-e${index}`}
-                trigger={trigger}
-                setValue={setValue}
-                register={register}
-                removeExercise={removeExercise}
-                index={index}
-                dayIndex={i}
-                e={e}
-                exercises={exercises}
-              />
-            ))}
+          <div className={s.day_exercise_list}>
+            {!clearing &&
+              d?.exercises?.map((e, index) => (
+                <DaysExercise
+                  key={`d${i}-e${index}`}
+                  trigger={trigger}
+                  setValue={setValue}
+                  register={register}
+                  removeExercise={removeExercise}
+                  index={index}
+                  dayIndex={i}
+                  e={e}
+                  exercises={exercises}
+                />
+              ))}
+          </div>
         </div>
       ))}
     </div>

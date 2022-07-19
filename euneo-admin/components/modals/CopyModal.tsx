@@ -72,14 +72,28 @@ const CopyModal = ({ item, isOpen, submitEvent, closeEvent }: Props) => {
   });
 
   const addItem = (name: string, index: number) => {
-    const updatedData = [...copyData];
-    updatedData.push({ name, index });
-    setCopyData([...updatedData]);
+    if (name === "all") {
+      const updatedData = [];
+      item.dataList.forEach((name, index) => {
+        if (name !== itemID) {
+          updatedData.push({ name, index });
+        }
+      });
+      setCopyData([...updatedData]);
+    } else {
+      const updatedData = [...copyData];
+      updatedData.push({ name, index });
+      setCopyData([...updatedData]);
+    }
   };
 
   const removeItem = (name: string) => {
-    const updatedData = copyData.filter((d) => d.name !== name);
-    setCopyData([...updatedData]);
+    if (name === "all") {
+      setCopyData([]);
+    } else {
+      const updatedData = copyData.filter((d) => d.name !== name);
+      setCopyData([...updatedData]);
+    }
   };
 
   if (isOpen) {
@@ -115,6 +129,16 @@ const CopyModal = ({ item, isOpen, submitEvent, closeEvent }: Props) => {
                   What {item.type} would you like to paste data from{" "}
                   {`${itemID.toUpperCase()}`}?
                 </Text>
+                <Input
+                  type="checkbox"
+                  label="Select all"
+                  name="Select all"
+                  checked={item.dataList.length - 1 === copyData.length}
+                  onChange={(e: React.BaseSyntheticEvent) => {
+                    if (e.target.checked) addItem("all", -1);
+                    else removeItem("all");
+                  }}
+                />
                 {item.dataList.map((name, index) => {
                   if (name !== itemID) {
                     return (
@@ -123,6 +147,7 @@ const CopyModal = ({ item, isOpen, submitEvent, closeEvent }: Props) => {
                         type="checkbox"
                         label={name}
                         name={name}
+                        checked={copyData.find((data) => data.name === name)}
                         onChange={(e: React.BaseSyntheticEvent) => {
                           if (e.target.checked) addItem(name, index);
                           else removeItem(name);

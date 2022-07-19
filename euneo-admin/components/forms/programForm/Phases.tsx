@@ -190,7 +190,7 @@ export const Phases = ({
             <div className={s.array_title}>{renderActionButtons(p, i)}</div>
 
             {p.days.length > 0 && (
-              <Text variant="h5">Days (max {p.length})</Text>
+              <Text variant="h6">Days (max {p.length})</Text>
             )}
             {!clearing &&
               p.days?.map((d, index) => (
@@ -208,7 +208,7 @@ export const Phases = ({
               ))}
             <br />
             {p["next-phase"].length > 0 && (
-              <Text variant="h5">Next phases</Text>
+              <Text variant="h6">Next phases</Text>
             )}
             {!clearing &&
               p &&
